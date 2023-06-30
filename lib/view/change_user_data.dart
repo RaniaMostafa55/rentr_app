@@ -16,6 +16,7 @@ class _ChangeUserDataState extends State<ChangeUserData> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
+    super.initState();
     usernameController.text = bLoC.userModel.data!.name!;
     phoneController.text = bLoC.userModel.data!.phone!;
     addressController.text =

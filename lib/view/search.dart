@@ -14,8 +14,8 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
-    List region = ["giza", "giza", "giza", "cairo", "cairo"];
-    List price = ["SAR 50", "SAR 70", "SAR 40", "SAR 40", "SAR 50"];
+    // List region = ["giza", "giza", "giza", "cairo", "cairo"];
+    // List price = ["SAR 50", "SAR 70", "SAR 40", "SAR 40", "SAR 50"];
     return Scaffold(
       body: SafeArea(
         child: Padding(

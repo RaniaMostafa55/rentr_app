@@ -2,8 +2,8 @@ import 'package:renta_app/controller/imports.dart';
 
 class ForgetPassView extends StatelessWidget {
   ForgetPassView({super.key});
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ class OnBoarding extends StatefulWidget {
 class _OnBoardingState extends State<OnBoarding> {
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     CacheHelper.putBool(key: "isFirstTime", value: false);
   }
 
@@ -69,7 +69,7 @@ class _OnBoardingState extends State<OnBoarding> {
                                   image: AssetImage(
                                       onBoardingModel[index].image!)),
                             ),
-                            (cIndex != 2)
+                            (cIndex.value != 2)
                                 ? Positioned(
                                     top: MediaQuery.of(context).size.height *
                                         0.025,
