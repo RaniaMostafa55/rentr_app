@@ -5,7 +5,6 @@ void main() async {
   await CacheHelper.init();
   await Locales.init(['en', 'ar']);
   HttpOverrides.global = MyHttpOverrides();
-
   runApp(ChangeNotifierProvider<MyProvider>(
       create: (context) => MyProvider(), child: const MyApp()));
 }
