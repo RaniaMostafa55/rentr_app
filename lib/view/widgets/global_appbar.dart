@@ -32,7 +32,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? titlee(text: title!, color: mainColor, size: 18)
                 : Image(
                     image: const AssetImage("assets/images/logo.png"),
-                    width: MediaQuery.of(context).size.width * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.085,
                   ),
             centerTitle: true,
             leading: (isHome == true)

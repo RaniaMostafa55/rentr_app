@@ -95,7 +95,7 @@ rateDialog(
                                 productId: productId!)
                             : bLoC.addUserReview(
                                 context: context,
-                                toID: userId.toString(),
+                                toID: userId!,
                                 rating: sum.toString());
                         reviewController.text = '';
                       },

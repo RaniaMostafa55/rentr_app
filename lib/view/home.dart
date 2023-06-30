@@ -96,7 +96,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             drawerTile(
                 title: "profile",
                 leading: Icons.person_outlined,
-                onTap: () {
+                onTap: () async {
+                  await bLoC.getUserReview(context: context);
                   isUserAccount = true;
                   Navigator.push(
                       context,
@@ -107,7 +108,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             drawerTile(
                 title: "requests",
                 leading: Icons.request_page_outlined,
-                onTap: () {
+                onTap: () async {
+                  await bLoC.getRequests(context: context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -344,8 +346,7 @@ Widget homeItem(
       await bLoC.getProductReview(productId: productId, context: context);
       await bLoC.getProduct(productId: productId.toString(), context: context);
       await bLoC.getUserDataa(userId: userId);
-      await bLoC.getAnotherUserReview(
-          context: context, userId: bLoC.anotherUserModel.data!.id!);
+      await bLoC.getAnotherUserReview(context: context, userId: userId);
       Navigator.push(
           context,
           MaterialPageRoute(

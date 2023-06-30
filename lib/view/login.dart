@@ -26,8 +26,10 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Image(
-                    image: AssetImage("assets/images/logo.png"),
+                  Image(
+                    fit: BoxFit.contain,
+                    height: MediaQuery.of(context).size.height * 0.18,
+                    image: const AssetImage("assets/images/logo.png"),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.04,

@@ -16,15 +16,15 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    if (isUserAccount) {
-      timer1 = Timer.periodic(const Duration(milliseconds: 3),
-          (Timer t) => bLoC.getUserReview(context: context));
-    } else {
-      timer1 = Timer.periodic(
-          const Duration(milliseconds: 3),
-          (Timer t) => bLoC.getAnotherUserReview(
-              context: context, userId: bLoC.anotherUserModel.data!.id!));
-    }
+    // if (isUserAccount) {
+    //   timer1 = Timer.periodic(const Duration(milliseconds: 3),
+    //       (Timer t) => bLoC.getUserReview(context: context));
+    // } else {
+    //   timer1 = Timer.periodic(
+    //       const Duration(milliseconds: 3),
+    //       (Timer t) => bLoC.getAnotherUserReview(
+    //           context: context, userId: bLoC.anotherUserModel.data!.id!));
+    // }
 
     final pro = Provider.of<MyProvider>(context);
 

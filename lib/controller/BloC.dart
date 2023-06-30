@@ -5,9 +5,6 @@ class BloC {
   final _userSubject = BehaviorSubject<UserModel>();
   Stream<UserModel> get user => _userSubject.stream;
 
-  final _requestSubject = BehaviorSubject<GetRequestsModel>();
-  Stream<GetRequestsModel> get request => _requestSubject.stream;
-
   final _userReviewSubject = BehaviorSubject<GetUsersReviewModel>();
   Stream<GetUsersReviewModel> get userReview => _userReviewSubject.stream;
 
@@ -88,8 +85,8 @@ class BloC {
       CacheHelper.putBool(key: "isLoggedIn", value: true);
       CacheHelper.putInt(key: "id", value: loginModel.data!.userData!.id!);
       await getUserData();
-      getRequests(context: context);
-      getUserReview(context: context);
+      // getRequests(context: context);
+      // getUserReview(context: context);
       await getCategories(context: context);
       await bLoC.storeCategories();
       await getProductsByCategory(context: context, categoryId: "1");
@@ -368,14 +365,13 @@ class BloC {
   }
 
   Future<void> getRequests({context}) async {
-    // loadingDialog(context: context);
+    loadingDialog(context: context);
     Response getRequestsResponse = await get(Uri.parse(API.requests), headers: {
       "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
     });
     getRequestsModel =
         GetRequestsModel.fromJson(json.decode(getRequestsResponse.body));
     if (getRequestsResponse.statusCode == 200) {
-      _requestSubject.add(getRequestsModel);
       // Navigator.pop(context);
       // showSnackBar(
       //     text: globalResponseModel.message!, context: context, isError: false);
@@ -394,6 +390,7 @@ class BloC {
     globalResponseModel =
         GlobalResponseModel.fromJson(json.decode(acceptRequestResponse.body));
     if (acceptRequestResponse.statusCode == 200) {
+      await getRequests();
       Navigator.pop(context);
       showSnackBar(
           text: globalResponseModel.message!, context: context, isError: false);
@@ -412,6 +409,7 @@ class BloC {
     globalResponseModel =
         GlobalResponseModel.fromJson(json.decode(refuseRequestResponse.body));
     if (refuseRequestResponse.statusCode == 200) {
+      await getRequests();
       Navigator.pop(context);
       showSnackBar(
           text: globalResponseModel.message!, context: context, isError: false);
@@ -439,13 +437,13 @@ class BloC {
   }
 
   Future<void> getAnotherUserReview({context, required int userId}) async {
-    Response getUserReviewResponse =
+    Response getAnotherUserReviewResponse =
         await get(Uri.parse('${API.reviews}$userId'), headers: {
       "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
     });
-    getAnotherUserReviewModel =
-        GetUsersReviewModel.fromJson(json.decode(getUserReviewResponse.body));
-    if (getUserReviewResponse.statusCode == 200) {
+    getAnotherUserReviewModel = GetUsersReviewModel.fromJson(
+        json.decode(getAnotherUserReviewResponse.body));
+    if (getAnotherUserReviewResponse.statusCode == 200) {
       _anotherUserReviewSubject.add(getAnotherUserReviewModel);
     } else {
       showSnackBar(text: getAnotherUserReviewModel.message!, context: context);
@@ -498,7 +496,7 @@ class BloC {
 
   Future<void> addUserReview({
     context,
-    required String toID,
+    required int toID,
     required String rating,
   }) async {
     loadingDialog(context: context);
@@ -511,7 +509,7 @@ class BloC {
     addUserReviewModel =
         AddReviewModel.fromJson(json.decode(addProductReviewResponse.body));
     if (addProductReviewResponse.statusCode == 200) {
-      getUserReview(context: context);
+      getAnotherUserReview(context: context, userId: toID);
       Navigator.pop(context);
       Navigator.pop(context);
       showSnackBar(
