@@ -350,6 +350,7 @@ Widget homeItem(
       await bLoC.getUserDataa(userId: userId);
       await bLoC.getAnotherUserReview(context: context, userId: userId);
 
+      Navigator.pop(context);
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -446,31 +447,38 @@ Widget tabContent({context}) {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.02,
         ),
-        ListView.builder(
-          itemCount: bLoC.getProductsByCategoryModel!.productsData!.length,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: homeItem(
-                    context: context,
-                    userId: bLoC.getProductsByCategoryModel!
-                        .productsData![index].userId!,
-                    productId: bLoC
-                        .getProductsByCategoryModel!.productsData![index].id!,
-                    pic: (bLoC.getProductsByCategoryModel!.productsData![index]
-                                .image ==
-                            "")
-                        ? "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                        : bLoC.getProductsByCategoryModel!.productsData![index]
-                            .image!,
-                    name: bLoC
-                        .getProductsByCategoryModel!.productsData![index].name!,
-                    price: bLoC.getProductsByCategoryModel!.productsData![index]
-                        .price!));
-          },
-        ),
+        (bLoC.getProductsByCategoryModel!.productsData!.isEmpty)
+            ? Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.18),
+                child: const LocaleText("no_products_exist_in_this_category"),
+              )
+            : ListView.builder(
+                itemCount:
+                    bLoC.getProductsByCategoryModel!.productsData!.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: homeItem(
+                          context: context,
+                          userId: bLoC.getProductsByCategoryModel!
+                              .productsData![index].userId!,
+                          productId: bLoC.getProductsByCategoryModel!
+                              .productsData![index].id!,
+                          pic: (bLoC.getProductsByCategoryModel!
+                                      .productsData![index].image ==
+                                  "")
+                              ? "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                              : bLoC.getProductsByCategoryModel!
+                                  .productsData![index].image!,
+                          name: bLoC.getProductsByCategoryModel!
+                              .productsData![index].name!,
+                          price: bLoC.getProductsByCategoryModel!
+                              .productsData![index].price!));
+                },
+              )
       ],
     ),
   );

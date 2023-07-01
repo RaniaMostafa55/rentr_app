@@ -5,6 +5,9 @@ class BloC {
   final _userSubject = BehaviorSubject<UserModel>();
   Stream<UserModel> get user => _userSubject.stream;
 
+  final _requestSubject = BehaviorSubject<GetRequestsModel>();
+  Stream<GetRequestsModel> get request => _requestSubject.stream;
+
   final _userReviewSubject = BehaviorSubject<GetUsersReviewModel>();
   Stream<GetUsersReviewModel> get userReview => _userReviewSubject.stream;
 
@@ -88,8 +91,9 @@ class BloC {
       // getRequests(context: context);
       // getUserReview(context: context);
       await getCategories(context: context);
-      await bLoC.storeCategories();
+      await storeCategories();
       await getProductsByCategory(context: context, categoryId: "1");
+      Navigator.pop(context);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -376,7 +380,7 @@ class BloC {
     if (getRequestsResponse.statusCode == 200) {
       Navigator.pop(context);
       Navigator.pop(context);
-
+      _requestSubject.add(getRequestsModel);
       // Navigator.pop(context);
       // showSnackBar(
       //     text: globalResponseModel.message!, context: context, isError: false);
@@ -395,8 +399,8 @@ class BloC {
     globalResponseModel =
         GlobalResponseModel.fromJson(json.decode(acceptRequestResponse.body));
     if (acceptRequestResponse.statusCode == 200) {
-      await getRequests();
-      Navigator.pop(context);
+      await getRequests(context: context);
+      // Navigator.pop(context);
       showSnackBar(
           text: globalResponseModel.message!, context: context, isError: false);
     } else {
@@ -414,8 +418,7 @@ class BloC {
     globalResponseModel =
         GlobalResponseModel.fromJson(json.decode(refuseRequestResponse.body));
     if (refuseRequestResponse.statusCode == 200) {
-      await getRequests();
-      Navigator.pop(context);
+      await getRequests(context: context);
       showSnackBar(
           text: globalResponseModel.message!, context: context, isError: false);
     } else {
@@ -611,7 +614,7 @@ class BloC {
     getProductModel =
         GetProductModel.fromJson(json.decode(getProductResponse.body));
     if (getProductResponse.statusCode == 200) {
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } else {
       Navigator.pop(context);
       showSnackBar(text: getProductModel!.message!, context: context);
