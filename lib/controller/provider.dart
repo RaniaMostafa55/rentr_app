@@ -25,22 +25,25 @@ class MyProvider extends ChangeNotifier {
     imageFile = File(pickedFile!.path);
     image = FileImage(imageFile!);
     // imageController.text = pickedFile.name;
+    await addImage(filepath: imageFile!.path);
     notifyListeners();
   }
 
   Future<void> addImage({required String filepath}) async {
     String addimageUrl = API.changeProfileImg;
     Map<String, String> headers = {
-      'Content-Type': 'multipart/form-data',
+      // 'Content-Type': 'multipart/form-data',
       "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
     };
     var request = http.MultipartRequest('PUT', Uri.parse(addimageUrl))
       ..headers.addAll(headers)
       ..files.add(await http.MultipartFile.fromPath('image', filepath));
-    var response = await request.send();
+    StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       print("Doneeeee");
     } else {
+      print(response.statusCode);
+      print(response);
       print("Nooooooooo");
     }
   }

@@ -314,7 +314,7 @@ class BloC {
     XFile? pickedFile = await ImagePicker().pickImage(
         source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1080);
     imageFile = File(pickedFile!.path);
-    addImage(filepath: imageFile!.path);
+    await addImage(filepath: imageFile!.path);
   }
 
   Future<void> addImage({required String filepath}) async {

@@ -70,17 +70,18 @@ class _ProfileViewState extends State<ProfileView> {
                       // alignment: Alignment.bottomRight,
                       children: [
                         userImage(
-                            context: context,
-                            image: (isUserAccount)
-                                ? (bLoC.userModel.data!.image!.isEmpty)
-                                    ? const NetworkImage(
-                                        "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
-                                    : NetworkImage(bLoC.userModel.data!.image!)
-                                : (bLoC.anotherUserModel.data!.image!.isEmpty)
-                                    ? const NetworkImage(
-                                        "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
-                                    : NetworkImage(
-                                        bLoC.anotherUserModel.data!.image!)),
+                          context: context,
+                          image: (isUserAccount)
+                              ? (bLoC.userModel.data!.image!.isEmpty)
+                                  ? const NetworkImage(
+                                      "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
+                                  : NetworkImage(bLoC.userModel.data!.image!)
+                              : (bLoC.anotherUserModel.data!.image!.isEmpty)
+                                  ? const NetworkImage(
+                                      "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
+                                  : NetworkImage(
+                                      bLoC.anotherUserModel.data!.image!),
+                        ),
                         (isUserAccount)
                             ? Positioned(
                                 right: -10,
@@ -89,10 +90,11 @@ class _ProfileViewState extends State<ProfileView> {
                                   onTap: () {
                                     showModalBottomSheet(
                                       context: context,
-                                      builder: ((builder) => bottomSheet(
-                                          context: context,
-                                          onGalleryPressed: bLoC.getFromGallery,
-                                          onCameraPressed: pro.getFromCamera)),
+                                      builder: (builder) => bottomSheet(
+                                        context: context,
+                                        onGalleryPressed: bLoC.getFromGallery,
+                                        onCameraPressed: pro.getFromCamera,
+                                      ),
                                     );
                                   },
                                   child: Container(
@@ -113,7 +115,8 @@ class _ProfileViewState extends State<ProfileView> {
                                       size: 17,
                                     ),
                                   ),
-                                ))
+                                ),
+                              )
                             : const SizedBox()
                       ]),
                   SizedBox(
