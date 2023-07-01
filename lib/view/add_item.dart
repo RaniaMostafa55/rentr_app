@@ -11,24 +11,27 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-  File? imageFile;
+  List<File>? imageFile = [];
   void _getFromGallery({required TextEditingController controller}) async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1080);
+    List<XFile>? pickedFile =
+        await ImagePicker().pickMultiImage(maxHeight: 1080, maxWidth: 1080);
+
     setState(() {
-      imageFile = File(pickedFile!.path);
-      controller.text = pickedFile.name;
+      for (var i = 0; i < pickedFile.length; i++) {
+        imageFile!.add(File(pickedFile[i].path));
+      }
+      // controller.text = pickedFile.name;
     });
   }
 
-  void _getFromCamera({required TextEditingController controller}) async {
-    XFile? pickedFile = await ImagePicker()
-        .pickImage(source: ImageSource.camera, maxHeight: 1080, maxWidth: 1080);
-    setState(() {
-      imageFile = File(pickedFile!.path);
-      controller.text = pickedFile.name;
-    });
-  }
+  // void _getFromCamera({required TextEditingController controller}) async {
+  //   XFile? pickedFile = await ImagePicker()
+  //       .pickImage(source: ImageSource.camera, maxHeight: 1080, maxWidth: 1080);
+  //   setState(() {
+  //     imageFile = File(pickedFile!.path);
+  //     controller.text = pickedFile.name;
+  //   });
+  // }
 
   late DateTime? start;
 
@@ -208,8 +211,8 @@ class _AddItemState extends State<AddItem> {
                                     controller: imageFirstController);
                               },
                               onCameraPressed: () {
-                                _getFromCamera(
-                                    controller: imageFirstController);
+                                // _getFromCamera(
+                                //     controller: imageFirstController);
                               })),
                         );
                       },
@@ -217,51 +220,51 @@ class _AddItemState extends State<AddItem> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.01,
                   ),
-                  globalTextField(
-                      controller: imageSecondController,
-                      readOnly: true,
-                      label: "attach_another_pic",
-                      prefix: Icons.attachment_outlined,
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: ((builder) => bottomSheet(
-                              context: context,
-                              onGalleryPressed: () {
-                                _getFromGallery(
-                                    controller: imageSecondController);
-                              },
-                              onCameraPressed: () {
-                                _getFromCamera(
-                                    controller: imageSecondController);
-                              })),
-                        );
-                      },
-                      textInputAction: TextInputAction.next),
+                  // globalTextField(
+                  //     controller: imageSecondController,
+                  //     readOnly: true,
+                  //     label: "attach_another_pic",
+                  //     prefix: Icons.attachment_outlined,
+                  //     onTap: () {
+                  //       showModalBottomSheet(
+                  //         context: context,
+                  //         builder: ((builder) => bottomSheet(
+                  //             context: context,
+                  //             onGalleryPressed: () {
+                  //               _getFromGallery(
+                  //                   controller: imageSecondController);
+                  //             },
+                  //             onCameraPressed: () {
+                  //               _getFromCamera(
+                  //                   controller: imageSecondController);
+                  //             })),
+                  //       );
+                  //     },
+                  //     textInputAction: TextInputAction.next),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.01,
                   ),
-                  globalTextField(
-                      controller: imageThirdController,
-                      readOnly: true,
-                      label: "attach_another_pic",
-                      prefix: Icons.attachment_outlined,
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: ((builder) => bottomSheet(
-                              context: context,
-                              onGalleryPressed: () {
-                                _getFromGallery(
-                                    controller: imageThirdController);
-                              },
-                              onCameraPressed: () {
-                                _getFromCamera(
-                                    controller: imageThirdController);
-                              })),
-                        );
-                      },
-                      textInputAction: TextInputAction.done),
+                  // globalTextField(
+                  //     controller: imageThirdController,
+                  //     readOnly: true,
+                  //     label: "attach_another_pic",
+                  //     prefix: Icons.attachment_outlined,
+                  //     onTap: () {
+                  //       showModalBottomSheet(
+                  //         context: context,
+                  //         builder: ((builder) => bottomSheet(
+                  //             context: context,
+                  //             onGalleryPressed: () {
+                  //               _getFromGallery(
+                  //                   controller: imageThirdController);
+                  //             },
+                  //             onCameraPressed: () {
+                  //               _getFromCamera(
+                  //                   controller: imageThirdController);
+                  //             })),
+                  //       );
+                  //     },
+                  //     textInputAction: TextInputAction.done),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.01,
                   ),
@@ -299,6 +302,18 @@ class _AddItemState extends State<AddItem> {
                   ),
                   matButton(
                       onPressed: () {
+                        bLoC.addProduct(
+                          name: itemNameController.text,
+                          description: descriptionController.text,
+                          categoryId: "3",
+                          price: priceController.text,
+                          latitude: itemLatitudeAddressController.text,
+                          longitude: itemLongitudeAddressController.text,
+                          startDate: startDate.text,
+                          endDate: endDate.text,
+                          context: context,
+                          imageFileList: imageFile!,
+                        );
                         // bloC.addProduct();
                         // Navigator.pushReplacement(
                         //     context,
