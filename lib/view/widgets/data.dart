@@ -1,6 +1,6 @@
 import 'package:renta_app/controller/imports.dart';
 
-Padding data(
+Padding data(context,
     {required String title,
     required String info,
     bool? isButton = false,
@@ -25,11 +25,18 @@ Padding data(
                         fontWeight: FontWeight.w600,
                         fontSize: 14)),
               )
-            : Text(info,
-                style: const TextStyle(
-                    color: mainColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14))
+            : Flexible(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                      start: MediaQuery.of(context).size.width * 0.1),
+                  child: Text(info,
+                      style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          color: mainColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14)),
+                ),
+              )
       ],
     ),
   );

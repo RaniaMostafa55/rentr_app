@@ -111,31 +111,36 @@ rateDialog(
 
 loadingDialog({context}) {
   showDialog(
+    barrierDismissible: false,
+    routeSettings: const RouteSettings(),
     context: context,
     builder: (context) {
       return Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.1),
-        child: AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CircularProgressIndicator(
-                      color: mainColor,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    LocaleText("please_wait")
-                  ],
-                )
-              ],
-            )),
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircularProgressIndicator(
+                        color: mainColor,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      LocaleText("please_wait")
+                    ],
+                  )
+                ],
+              )),
+        ),
       );
     },
   );

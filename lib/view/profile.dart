@@ -247,38 +247,39 @@ class _ProfileViewState extends State<ProfileView> {
                             builder: (context, snapshot) {
                               return Column(
                                 children: [
-                                  data(
+                                  data(context,
                                       title: "username",
                                       info: (isUserAccount)
                                           ? snapshot.data!.data!.name!
                                           : bLoC.anotherUserModel.data!.name!),
-                                  data(
+                                  data(context,
                                       title: "email_address",
-                                      info: (isUserAccount)
-                                          ? snapshot.data!.data!.email!
-                                          : bLoC.anotherUserModel.data!.email!),
-                                  data(
+                                      info:
+                                          // "sdal;jlksfjsaklfjsakljflkajsdlkajlkdjlskjadjk"
+                                          (isUserAccount)
+                                              ? snapshot.data!.data!.email!
+                                              : bLoC.anotherUserModel.data!
+                                                  .email!),
+                                  data(context,
                                       title: "phone_number",
                                       info: (isUserAccount)
                                           ? snapshot.data!.data!.phone!
                                           : bLoC.anotherUserModel.data!.phone!),
-                                  data(
+                                  data(context,
                                       title: "address",
                                       info: "view_location",
-                                      isButton: true,
-                                      onPressed: () {
-                                        Utils.openGoogleMaps(
-                                            latitude: (isUserAccount)
-                                                ? snapshot.data!.data!.latitude!
-                                                : bLoC.anotherUserModel.data!
-                                                    .latitude!,
-                                            longitude: (isUserAccount)
-                                                ? snapshot
-                                                    .data!.data!.longitude!
-                                                : bLoC.anotherUserModel.data!
-                                                    .longitude!);
-                                      }),
-                                  data(
+                                      isButton: true, onPressed: () {
+                                    Utils.openGoogleMaps(
+                                        latitude: (isUserAccount)
+                                            ? snapshot.data!.data!.latitude!
+                                            : bLoC.anotherUserModel.data!
+                                                .latitude!,
+                                        longitude: (isUserAccount)
+                                            ? snapshot.data!.data!.longitude!
+                                            : bLoC.anotherUserModel.data!
+                                                .longitude!);
+                                  }),
+                                  data(context,
                                       title: "join_date",
                                       info: (isUserAccount)
                                           ? snapshot.data!.data!.createdAt!

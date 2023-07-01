@@ -107,5 +107,6 @@
   "occasion_supplies":"مستلزمات مناسبات",
   "user_account":"حساب المستخدم",
   "press_here":"اضغط هنا",
-  "select_category":"اختر فئة"
+  "select_category":"اختر فئة",
+  "no_products_exist_in_this_category":"لا توجد منتجات في هذه الفئة"
 }

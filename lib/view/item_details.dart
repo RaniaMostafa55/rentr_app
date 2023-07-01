@@ -202,10 +202,12 @@ class _ItemDetailsState extends State<ItemDetails> {
                       child: Column(
                         children: [
                           data(
+                            context,
                             title: "name",
                             info: bLoC.anotherUserModel.data!.name!,
                           ),
                           data(
+                            context,
                             title: "phone_number",
                             info: bLoC.anotherUserModel.data!.phone!,
                           ),
@@ -213,30 +215,28 @@ class _ItemDetailsState extends State<ItemDetails> {
                           //   title: "district",
                           //   info: "Giza",
                           // ),
-                          data(
+                          data(context,
                               title: "location",
                               info: "view_location",
-                              isButton: true,
-                              onPressed: () {
-                                Utils.openGoogleMaps(
-                                    latitude:
-                                        bLoC.getProductModel!.data!.latitude!,
-                                    longitude:
-                                        bLoC.getProductModel!.data!.longitude!);
-                              }),
-                          data(
+                              isButton: true, onPressed: () {
+                            Utils.openGoogleMaps(
+                                latitude: bLoC.getProductModel!.data!.latitude!,
+                                longitude:
+                                    bLoC.getProductModel!.data!.longitude!);
+                          }),
+                          data(context,
                               title: "User Account",
                               info: "Press here",
-                              isButton: true,
-                              onPressed: () {
-                                isUserAccount = false;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const ProfileView(),
-                                    ));
-                              }),
+                              isButton: true, onPressed: () {
+                            isUserAccount = false;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ProfileView(),
+                                ));
+                          }),
                           data(
+                            context,
                             title: "available_period",
                             info:
                                 "${bLoC.getProductModel!.data!.startDate!} : ${bLoC.getProductModel!.data!.endDate!}",
