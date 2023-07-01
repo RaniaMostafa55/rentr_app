@@ -13,7 +13,10 @@ class AboutAppView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 25),
         child: Column(
           children: [
-            const Image(image: AssetImage("assets/images/logo.png")),
+            Image(
+                fit: BoxFit.contain,
+                height: MediaQuery.of(context).size.height * 0.18,
+                image: const AssetImage("assets/images/logo.png")),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),

@@ -28,8 +28,10 @@ class _OTPViewState extends State<OTPView> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.2,
               ),
-              const Image(
-                image: AssetImage("assets/images/logo.png"),
+              Image(
+                fit: BoxFit.contain,
+                height: MediaQuery.of(context).size.height * 0.18,
+                image: const AssetImage("assets/images/logo.png"),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.04,
