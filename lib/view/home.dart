@@ -58,6 +58,21 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   ];
   int? categoryId;
 
+  getData(BuildContext context) async {
+    await bLoC.getUserData();
+    await bLoC.getCategories(context: context);
+    await bLoC.storeCategories();
+    await bLoC.getProductsByCategory(context: context, categoryId: "1");
+  }
+
+  @override
+  void initState() {
+    getData(context);
+    super.initState();
+    // getRequests(context: context);
+    // getUserReview(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final pro = Provider.of<MyProvider>(context);
@@ -202,11 +217,11 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       },
                       child: shadowContainer(
                           borderRadius: BorderRadius.circular(10),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
+                          child: const Padding(
+                            padding: EdgeInsets.all(15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.search,
                                   color: secColor,

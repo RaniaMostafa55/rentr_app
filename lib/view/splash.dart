@@ -10,11 +10,9 @@ class SplashView extends StatelessWidget {
       splashIconSize: MediaQuery.of(context).size.width * 0.6,
       nextScreen: CacheHelper.getBool(key: "isFirstTime", choice: true)
           ? const OnBoarding()
-          :
-          // (CacheHelper.getBool(key: "isLoggedIn", choice: false) == true)
-          //     ? const LoginLoading()
-          //     :
-          const LoginView(),
+          : (CacheHelper.getString(key: "token").isEmpty)
+              ? const LoginView()
+              : const HomeView(),
       // const OnBoarding(),
       splashTransition: SplashTransition.sizeTransition,
       curve: Curves.easeIn,
