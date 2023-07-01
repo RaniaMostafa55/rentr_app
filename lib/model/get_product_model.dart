@@ -21,7 +21,7 @@ class ProductDataa {
   int? id;
   String? name;
   String? description;
-  int? price;
+  num? price;
   double? latitude;
   double? longitude;
   String? startDate;

@@ -38,6 +38,7 @@ class BloC {
   late GetProductModel? getProductModel;
   late GetCategoriesModel? getCategoriesModel;
   late GetSomeProductsModel? getProductsByCategoryModel;
+  File? imageFile;
 
   Future<void> signUp({
     context,
@@ -67,6 +68,7 @@ class BloC {
           MaterialPageRoute(
             builder: (context) => const OTPView(),
           ));
+      showSnackBar(text: userModel.message!, context: context, isError: false);
     } else {
       Navigator.pop(context);
       showSnackBar(text: userModel.message!, context: context);
@@ -256,87 +258,18 @@ class BloC {
     }
   }
 
-  Future<void> addProduct(
-      {context,
-      required String name,
-      required String description,
-      required String price,
-      required String latitude,
-      required String longitude,
-      required String startDate,
-      required String endDate,
-      required List<File> imageFileList,
-      required String categoryId}) async {
-    try {
-      loadingDialog(context: context);
-      List<dynamic>? documents = [];
-      for (int i = 0; i < imageFileList.length; i++) {
-        var path = imageFileList[i].path;
-        documents.add(
-          await dio.MultipartFile.fromFile(path,
-              filename: path.split('/').last),
-        );
-      }
-      dio.FormData formData = dio.FormData.fromMap({
-        "name": name,
-        "description": description,
-        "price": price,
-        "latitude": latitude,
-        "longitude": longitude,
-        "startBooking": startDate,
-        "endBooking": endDate,
-        "images": documents,
-        "category_id": categoryId
-      });
-      Map<String, String> headers = {
-        'content-type': 'application/json',
-        'accept': 'application/json',
-        "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
-      };
-      dio.Response response =
-          await dio.Dio(dio.BaseOptions(baseUrl: API.baseUrl)).post('/product/',
-              data: formData,
-              options: dio.Options(headers: headers, method: 'POST'));
-      if (response.statusCode == 200) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        showSnackBar(
-            text: response.data['message']!, context: context, isError: false);
-      } else {
-        Navigator.pop(context);
-        showSnackBar(text: response.data['message']!, context: context);
-      }
-    } on dio.DioException catch (e) {
-      Navigator.pop(context);
-      print(e.response!.data);
-    }
-  }
-
-  // Future<void> changeProfilePic({context, required String image}) async {
-  //   loadingDialog(context: context);
-  //   Response changeProfilePicResponse = await patch(Uri.parse("url"), body: {
-  //     "image": image
-  //   }, headers: {
-  //     "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
-  //   });
-  //   userPicModel =
-  //       UserModel.fromJson(json.decode(changeProfilePicResponse.body));
-  //   if (changeProfilePicResponse.statusCode == 200) {
-  //     Navigator.pop(context);
-  //     showSnackBar(
-  //         text: userPicModel.message!, context: context, isError: false);
-  //   } else {
-  //     Navigator.pop(context);
-  //     showSnackBar(text: addProductResponseModel.message!, context: context);
-  //   }
-  // }
-
-  File? imageFile;
   void getFromGallery() async {
     XFile? pickedFile = await ImagePicker().pickImage(
         source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1080);
     imageFile = File(pickedFile!.path);
     await addImage(filepath: imageFile!.path);
+  }
+
+  void getFromCamera() async {
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    imageFile = File(pickedFile!.path);
+    await addImage(filepath: pickedFile.path);
   }
 
   Future<void> addImage({required String filepath}) async {
@@ -549,62 +482,59 @@ class BloC {
 
   //------------------------------Products--------------------------------------
 
-  // Future<void> addProduct(
-  //     {context,
-  //     required String name,
-  //     required String description,
-  //     required String price,
-  //     required String latitude,
-  //     required String longitude,
-  //     required String startDate,
-  //     required String endDate,
-  //     required String images,
-  //     required String categoryId}) async {
-  //   loadingDialog(context: context);
-  //   Response addProductResponse = await post(Uri.parse(API.products), body: {
-  //     "name": name,
-  //     "description": description,
-  //     "price": price,
-  //     "latitude": latitude,
-  //     "longitude": longitude,
-  //     "startBooking": startDate,
-  //     "endBooking": endDate,
-  //     "images": images,
-  //     "category_id": categoryId
-  //   }, headers: {
-  //     "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
-  //   });
-  //   addProductModel =
-  //       AddProductModel.fromJson(json.decode(addProductResponse.body));
-  //   if (addProductResponse.statusCode == 200) {
-  //     Navigator.pop(context);
-  //     Navigator.pop(context);
-  //     showSnackBar(
-  //         text: addProductModel!.message!, context: context, isError: false);
-  //   } else {
-  //     Navigator.pop(context);
-  //     showSnackBar(text: addProductModel!.message!, context: context);
-  //   }
-  // }
-
-  Future<void> getAllProducts({
-    context,
-  }) async {
-    loadingDialog(context: context);
-    Response getAllProductsResponse =
-        await get(Uri.parse(API.products), headers: {
-      "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
-    });
-    getAllProductsModel =
-        GetAllProductsModel.fromJson(json.decode(getAllProductsResponse.body));
-    if (getAllProductsResponse.statusCode == 200) {
-      showSnackBar(
-          text: getAllProductsModel!.message!,
-          context: context,
-          isError: false);
-    } else {
+  Future<void> addProduct(
+      {context,
+      required String name,
+      required String description,
+      required String price,
+      required String latitude,
+      required String longitude,
+      required String startDate,
+      required String endDate,
+      required List<File> imageFileList,
+      required String categoryId}) async {
+    try {
+      loadingDialog(context: context);
+      List<dynamic>? documents = [];
+      for (int i = 0; i < imageFileList.length; i++) {
+        var path = imageFileList[i].path;
+        documents.add(
+          await dio.MultipartFile.fromFile(path,
+              filename: path.split('/').last),
+        );
+      }
+      dio.FormData formData = dio.FormData.fromMap({
+        "name": name,
+        "description": description,
+        "price": price,
+        "latitude": latitude,
+        "longitude": longitude,
+        "startBooking": startDate,
+        "endBooking": endDate,
+        "images": documents,
+        "category_id": categoryId
+      });
+      Map<String, String> headers = {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
+      };
+      dio.Response response =
+          await dio.Dio(dio.BaseOptions(baseUrl: API.baseUrl)).post('/product/',
+              data: formData,
+              options: dio.Options(headers: headers, method: 'POST'));
+      if (response.statusCode == 200) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+        showSnackBar(
+            text: response.data['message']!, context: context, isError: false);
+      } else {
+        Navigator.pop(context);
+        showSnackBar(text: response.data['message']!, context: context);
+      }
+    } on dio.DioException catch (e) {
       Navigator.pop(context);
-      showSnackBar(text: getAllProductsModel!.message!, context: context);
+      print(e.response!.data);
     }
   }
 

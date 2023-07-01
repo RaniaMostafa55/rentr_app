@@ -12,48 +12,34 @@ class AddItem extends StatefulWidget {
 
 class _AddItemState extends State<AddItem> {
   List<File>? imageFile = [];
+  List? pickedFilesNames = [];
   void _getFromGallery({required TextEditingController controller}) async {
     List<XFile>? pickedFile =
         await ImagePicker().pickMultiImage(maxHeight: 1080, maxWidth: 1080);
-
     setState(() {
       for (var i = 0; i < pickedFile.length; i++) {
         imageFile!.add(File(pickedFile[i].path));
+        pickedFilesNames!.add(pickedFile[i].name);
       }
+      controller.text = pickedFilesNames.toString();
       // controller.text = pickedFile.name;
     });
   }
 
-  // void _getFromCamera({required TextEditingController controller}) async {
-  //   XFile? pickedFile = await ImagePicker()
-  //       .pickImage(source: ImageSource.camera, maxHeight: 1080, maxWidth: 1080);
-  //   setState(() {
-  //     imageFile = File(pickedFile!.path);
-  //     controller.text = pickedFile.name;
-  //   });
-  // }
-
   late DateTime? start;
-
   late DateTime? end;
-
   DateTime date = DateTime.now();
-
   TextEditingController startDate = TextEditingController();
-
   TextEditingController endDate = TextEditingController();
-
   TextEditingController itemNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
-  TextEditingController imageFirstController = TextEditingController();
-  TextEditingController imageSecondController = TextEditingController();
-  TextEditingController imageThirdController = TextEditingController();
+  TextEditingController imagesController = TextEditingController();
   TextEditingController itemLatitudeAddressController = TextEditingController();
   TextEditingController itemLongitudeAddressController =
       TextEditingController();
-
   String? value;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,252 +64,250 @@ class _AddItemState extends State<AddItem> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  globalTextField(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    globalTextField(
                       label: "item_name",
                       controller: itemNameController,
                       prefix: Icons.label_outline_sharp,
                       textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  globalTextField(
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter the product name";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    globalTextField(
                       label: "description",
                       controller: descriptionController,
                       maxLines: 5,
                       prefix: Icons.type_specimen_outlined,
                       textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.text),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  globalTextField(
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter the product description";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    globalTextField(
                       label: "price",
                       controller: priceController,
                       prefix: Icons.attach_money_outlined,
                       textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.number),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  globalTextField(
-                    label: "address",
-                    controller: locationController,
-                    readOnly: true,
-                    prefix: Icons.location_on_outlined,
-                    onTap: () {
-                      notSignedUpYet = true;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddLocation(
-                              controller: locationController,
-                              latitudeController: itemLatitudeAddressController,
-                              longitudeController:
-                                  itemLongitudeAddressController,
-                            ),
-                          ));
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  globalTextField(
-                      controller: startDate,
-                      readOnly: true,
-                      label: "booking_start_date",
-                      prefix: Icons.calendar_month_outlined,
-                      onTap: () async {
-                        DateTime? start = await showDatePicker(
-                            builder: (context, child) => Theme(
-                                data: ThemeData(
-                                  colorScheme: const ColorScheme.light(
-                                    primary: mainColor,
-                                  ),
-                                ),
-                                child: child ?? const Text("")),
-                            context: context,
-                            initialDate: date,
-                            firstDate: DateTime(2020),
-                            lastDate: DateTime(2030));
-                        if (start != null) {
-                          startDate.text = DateFormat.yMMMEd().format(start);
-                        }
-                      },
+                      keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Enter booking start date";
+                          return "Please enter the product price";
                         } else {
                           return null;
                         }
                       },
-                      textInputAction: TextInputAction.next),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  globalTextField(
-                      controller: endDate,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    globalTextField(
+                      label: "address",
+                      controller: locationController,
                       readOnly: true,
-                      label: "booking_end_date",
-                      prefix: Icons.calendar_month_outlined,
-                      onTap: () async {
-                        DateTime? end = await showDatePicker(
-                            builder: (context, child) => Theme(
-                                data: ThemeData(
-                                    colorScheme: const ColorScheme.light(
-                                  primary: mainColor,
-                                )),
-                                child: child ?? const Text("")),
-                            context: context,
-                            initialDate: date,
-                            firstDate: DateTime(2020),
-                            lastDate: DateTime(2030));
-                        if (end != null) {
-                          endDate.text = DateFormat.yMMMEd().format(end);
-                        }
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Enter booking end date";
-                        } else {
-                          return null;
-                        }
-                      },
-                      textInputAction: TextInputAction.next),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  globalTextField(
-                      controller: imageFirstController,
-                      readOnly: true,
-                      label: "attach_item_first_pic",
-                      prefix: Icons.attachment_outlined,
+                      prefix: Icons.location_on_outlined,
                       onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: ((builder) => bottomSheet(
-                              context: context,
-                              onGalleryPressed: () {
-                                _getFromGallery(
-                                    controller: imageFirstController);
-                              },
-                              onCameraPressed: () {
-                                // _getFromCamera(
-                                //     controller: imageFirstController);
-                              })),
-                        );
+                        notSignedUpYet = true;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddLocation(
+                                controller: locationController,
+                                latitudeController:
+                                    itemLatitudeAddressController,
+                                longitudeController:
+                                    itemLongitudeAddressController,
+                              ),
+                            ));
                       },
-                      textInputAction: TextInputAction.next),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  // globalTextField(
-                  //     controller: imageSecondController,
-                  //     readOnly: true,
-                  //     label: "attach_another_pic",
-                  //     prefix: Icons.attachment_outlined,
-                  //     onTap: () {
-                  //       showModalBottomSheet(
-                  //         context: context,
-                  //         builder: ((builder) => bottomSheet(
-                  //             context: context,
-                  //             onGalleryPressed: () {
-                  //               _getFromGallery(
-                  //                   controller: imageSecondController);
-                  //             },
-                  //             onCameraPressed: () {
-                  //               _getFromCamera(
-                  //                   controller: imageSecondController);
-                  //             })),
-                  //       );
-                  //     },
-                  //     textInputAction: TextInputAction.next),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  // globalTextField(
-                  //     controller: imageThirdController,
-                  //     readOnly: true,
-                  //     label: "attach_another_pic",
-                  //     prefix: Icons.attachment_outlined,
-                  //     onTap: () {
-                  //       showModalBottomSheet(
-                  //         context: context,
-                  //         builder: ((builder) => bottomSheet(
-                  //             context: context,
-                  //             onGalleryPressed: () {
-                  //               _getFromGallery(
-                  //                   controller: imageThirdController);
-                  //             },
-                  //             onCameraPressed: () {
-                  //               _getFromCamera(
-                  //                   controller: imageThirdController);
-                  //             })),
-                  //       );
-                  //     },
-                  //     textInputAction: TextInputAction.done),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                    decoration: BoxDecoration(
-                        color: textFieldColor.withOpacity(0.20),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        hint: const LocaleText("select_category"),
-                        value: value,
-                        borderRadius: BorderRadius.circular(10),
-                        isExpanded: true,
-                        iconEnabledColor: secColor,
-                        iconSize: 36,
-                        items: (pro.isEnglish)
-                            ? englishCategories
-                                .map((e) => buildMenuItem(e))
-                                .toList()
-                            : arabicCategories
-                                .map((e) => buildMenuItem(e))
-                                .toList(),
-                        onChanged: (value) => setState(() {
-                          this.value = value;
-                          identifyCategoryId(value!);
-                          // print(categoryId);
-                        }),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter the product address";
+                        } else {
+                          return null;
+                        }
+                      },
+                      textInputAction: TextInputAction.next,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    globalTextField(
+                        controller: startDate,
+                        readOnly: true,
+                        label: "booking_start_date",
+                        prefix: Icons.calendar_month_outlined,
+                        onTap: () async {
+                          DateTime? start = await showDatePicker(
+                              builder: (context, child) => Theme(
+                                  data: ThemeData(
+                                    colorScheme: const ColorScheme.light(
+                                      primary: mainColor,
+                                    ),
+                                  ),
+                                  child: child ?? const Text("")),
+                              context: context,
+                              initialDate: date,
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime(2030));
+                          if (start != null) {
+                            startDate.text = DateFormat.yMMMEd().format(start);
+                          }
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter booking start date";
+                          } else {
+                            return null;
+                          }
+                        },
+                        textInputAction: TextInputAction.next),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    globalTextField(
+                        controller: endDate,
+                        readOnly: true,
+                        label: "booking_end_date",
+                        prefix: Icons.calendar_month_outlined,
+                        onTap: () async {
+                          DateTime? end = await showDatePicker(
+                              builder: (context, child) => Theme(
+                                  data: ThemeData(
+                                      colorScheme: const ColorScheme.light(
+                                    primary: mainColor,
+                                  )),
+                                  child: child ?? const Text("")),
+                              context: context,
+                              initialDate: date,
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime(2030));
+                          if (end != null) {
+                            endDate.text = DateFormat.yMMMEd().format(end);
+                          }
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter booking end date";
+                          } else {
+                            return null;
+                          }
+                        },
+                        textInputAction: TextInputAction.next),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    globalTextField(
+                        controller: imagesController,
+                        readOnly: true,
+                        label: "attach_item_pic",
+                        prefix: Icons.attachment_outlined,
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: ((builder) => bottomSheet(
+                                  context: context,
+                                  isAddingItem: true,
+                                  onGalleryPressed: () {
+                                    _getFromGallery(
+                                        controller: imagesController);
+                                  },
+                                )),
+                          );
+                        },
+                        validator: (value) {
+                          if (imageFile!.length > 3) {
+                            imageFile!.clear();
+                            pickedFilesNames!.clear();
+                            return "You can add 3 images maximum";
+                          }
+                          return null;
+                        },
+                        textInputAction: TextInputAction.next),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 7),
+                      decoration: BoxDecoration(
+                          color: textFieldColor.withOpacity(0.20),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          hint: const LocaleText("select_category"),
+                          value: value,
+                          borderRadius: BorderRadius.circular(10),
+                          isExpanded: true,
+                          iconEnabledColor: secColor,
+                          iconSize: 36,
+                          items: (pro.isEnglish)
+                              ? englishCategories
+                                  .map((e) => buildMenuItem(e))
+                                  .toList()
+                              : arabicCategories
+                                  .map((e) => buildMenuItem(e))
+                                  .toList(),
+                          onChanged: (value) => setState(() {
+                            this.value = value;
+                            identifyCategoryId(value!);
+                            // print(categoryId);
+                          }),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  matButton(
-                      onPressed: () {
-                        bLoC.addProduct(
-                          name: itemNameController.text,
-                          description: descriptionController.text,
-                          categoryId: "3",
-                          price: priceController.text,
-                          latitude: itemLatitudeAddressController.text,
-                          longitude: itemLongitudeAddressController.text,
-                          startDate: startDate.text,
-                          endDate: endDate.text,
-                          context: context,
-                          imageFileList: imageFile!,
-                        );
-                        // bloC.addProduct();
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => const HomeView(),
-                        //     ));
-                      },
-                      text: "add",
-                      context: context),
-                ],
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    matButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+                            bLoC.addProduct(
+                              name: itemNameController.text,
+                              description: descriptionController.text,
+                              categoryId: (categoryId == null)
+                                  ? "1"
+                                  : categoryId.toString(),
+                              price: priceController.text,
+                              latitude: itemLatitudeAddressController.text,
+                              longitude: itemLongitudeAddressController.text,
+                              startDate: startDate.text,
+                              endDate: endDate.text,
+                              context: context,
+                              imageFileList: imageFile!,
+                            );
+                          }
+                          // bloC.addProduct();
+                          // Navigator.pushReplacement(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => const HomeView(),
+                          //     ));
+                        },
+                        text: "add",
+                        context: context),
+                  ],
+                ),
               ),
             ),
           ],

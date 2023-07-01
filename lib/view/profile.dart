@@ -101,7 +101,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       builder: (builder) => bottomSheet(
                                         context: context,
                                         onGalleryPressed: bLoC.getFromGallery,
-                                        onCameraPressed: pro.getFromCamera,
+                                        onCameraPressed: bLoC.getFromCamera,
                                       ),
                                     );
                                   },
@@ -293,9 +293,14 @@ class _ProfileViewState extends State<ProfileView> {
                                   data(context,
                                       title: "join_date",
                                       info: (isUserAccount)
-                                          ? snapshot.data!.data!.createdAt!
-                                          : bLoC.anotherUserModel.data!
-                                              .createdAt!)
+                                          ? DateFormat.yMMMEd().format(
+                                              DateTime.parse(snapshot
+                                                  .data!.data!.createdAt!))
+                                          : DateFormat.yMMMEd().format(
+                                              DateTime.parse(bLoC
+                                                  .anotherUserModel
+                                                  .data!
+                                                  .createdAt!)))
                                 ],
                               );
                             }),

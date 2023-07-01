@@ -89,7 +89,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               fontWeight: FontWeight.w500)),
                       currentAccountPicture: userImage(
                           context: context,
-                          image: NetworkImage(bLoC.userModel.data!.image!)),
+                          image: (snapshot.data!.data!.image!.isEmpty)
+                              ? const NetworkImage(
+                                  "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
+                              : NetworkImage(snapshot.data!.data!.image!)),
                     );
                   }),
             ),
@@ -340,7 +343,7 @@ Widget homeItem(
     required String pic,
 //required int rate,
     required String name,
-    required int price,
+    required num price,
     required int userId,
     required int productId}) {
   return InkWell(
