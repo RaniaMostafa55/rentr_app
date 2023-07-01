@@ -324,12 +324,12 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                               child: shadowContainer(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(18.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      children: const [
                                         LocaleText(
                                           "change_user_data",
                                           style: TextStyle(
@@ -364,12 +364,12 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                               child: shadowContainer(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(18.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      children: const [
                                         LocaleText(
                                           "change_password",
                                           style: TextStyle(
@@ -508,12 +508,12 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                               child: shadowContainer(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(18.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: [
+                                      children: const [
                                         LocaleText(
                                           "change_language",
                                           style: TextStyle(

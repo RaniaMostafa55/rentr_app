@@ -199,11 +199,11 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       },
                       child: shadowContainer(
                           borderRadius: BorderRadius.circular(10),
-                          child: const Padding(
-                            padding: EdgeInsets.all(15),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
+                              children: const [
                                 Icon(
                                   Icons.search,
                                   color: secColor,
