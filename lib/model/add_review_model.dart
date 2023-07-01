@@ -18,7 +18,7 @@ class AddReviewModel {
 
 class ReviewData {
   int? id;
-  int? rating;
+  num? rating;
   int? fromId;
   int? toId;
   ReviewData({
@@ -30,7 +30,7 @@ class ReviewData {
   factory ReviewData.fromJson(Map<String, dynamic> json) {
     return ReviewData(
         id: json['id'],
-        rating: json['rating'],
+        rating: json['rating'] as num,
         fromId: json['from_id'],
         toId: json['to_id']);
   }
