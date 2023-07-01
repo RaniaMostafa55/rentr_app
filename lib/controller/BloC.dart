@@ -294,16 +294,12 @@ class BloC {
         "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
       };
       dio.Response response =
-          await dio.Dio(dio.BaseOptions(baseUrl: API.baseUrl)).post(
-              '/auth/profile-image/',
+          await dio.Dio(dio.BaseOptions(baseUrl: API.baseUrl)).post('/product/',
               data: formData,
               options: dio.Options(headers: headers, method: 'POST'));
       if (response.statusCode == 200) {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomeView(),
-            ));
+        Navigator.pop(context);
+        Navigator.pop(context);
         showSnackBar(
             text: response.data['message']!, context: context, isError: false);
       } else {
@@ -311,7 +307,8 @@ class BloC {
         showSnackBar(text: response.data['message']!, context: context);
       }
     } on dio.DioException catch (e) {
-      print(e);
+      Navigator.pop(context);
+      print(e.response!.data);
     }
   }
 
