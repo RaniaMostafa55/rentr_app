@@ -18,7 +18,7 @@ class _ChangePassViewState extends State<ChangePassView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const GlobalAppBar(
-        isDoubleBack: true,
+        // isDoubleBack: true,
         isLogo: true,
       ),
       body: SingleChildScrollView(

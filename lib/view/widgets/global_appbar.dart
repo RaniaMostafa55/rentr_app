@@ -7,17 +7,15 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? iconAction;
   final Color? titleColor;
   final bool? isHome;
-  final bool? isDoubleBack;
-  const GlobalAppBar(
-      {Key? key,
-      this.title,
-      this.hasActions = false,
-      this.iconAction,
-      this.titleColor,
-      this.isHome = false,
-      this.isLogo = false,
-      this.isDoubleBack = false})
-      : super(key: key);
+  const GlobalAppBar({
+    Key? key,
+    this.title,
+    this.hasActions = false,
+    this.iconAction,
+    this.titleColor,
+    this.isHome = false,
+    this.isLogo = false,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,12 +37,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? null
                 : IconButton(
                     onPressed: () {
-                      if (isDoubleBack == true) {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      } else {
-                        Navigator.pop(context);
-                      }
+                      Navigator.pop(context);
                     },
                     icon: const Icon(
                       Icons.arrow_back,

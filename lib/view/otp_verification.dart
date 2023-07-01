@@ -16,7 +16,7 @@ class _OTPViewState extends State<OTPView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const GlobalAppBar(
-        isDoubleBack: true,
+        // isDoubleBack: true,
         isLogo: true,
       ),
       body: SingleChildScrollView(

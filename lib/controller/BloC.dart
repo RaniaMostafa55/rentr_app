@@ -110,6 +110,7 @@ class BloC {
         GlobalResponseModel.fromJson(json.decode(sendOTPResponse.body));
     if (sendOTPResponse.statusCode == 200) {
       isSignUp = false;
+      Navigator.pop(context);
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -139,6 +140,7 @@ class BloC {
               builder: (context) => const LoginView(),
             ));
       } else {
+        Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -372,6 +374,9 @@ class BloC {
     getRequestsModel =
         GetRequestsModel.fromJson(json.decode(getRequestsResponse.body));
     if (getRequestsResponse.statusCode == 200) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+
       // Navigator.pop(context);
       // showSnackBar(
       //     text: globalResponseModel.message!, context: context, isError: false);
@@ -606,7 +611,7 @@ class BloC {
     getProductModel =
         GetProductModel.fromJson(json.decode(getProductResponse.body));
     if (getProductResponse.statusCode == 200) {
-      print("Done");
+      Navigator.pop(context);
     } else {
       Navigator.pop(context);
       showSnackBar(text: getProductModel!.message!, context: context);
