@@ -8,7 +8,7 @@ export 'package:renta_app/view/widgets/text_field.dart';
 export 'package:renta_app/view/otp_verification.dart';
 export 'package:renta_app/view/forget_pass.dart';
 export 'package:renta_app/view/sign_up.dart';
-export 'package:get/get.dart' hide Response;
+export 'package:get/get.dart' hide Response hide MultipartFile hide FormData;
 export 'package:renta_app/view/widgets/global_indicators.dart';
 export 'package:renta_app/model/onboarding_model.dart';
 export 'package:renta_app/view/change_pass.dart';

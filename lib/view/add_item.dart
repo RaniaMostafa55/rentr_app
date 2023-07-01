@@ -299,11 +299,12 @@ class _AddItemState extends State<AddItem> {
                   ),
                   matButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeView(),
-                            ));
+                        // bloC.addProduct();
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const HomeView(),
+                        //     ));
                       },
                       text: "add",
                       context: context),

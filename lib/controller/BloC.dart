@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:renta_app/controller/imports.dart';
 
@@ -255,44 +256,64 @@ class BloC {
     }
   }
 
-  // Future<void> addProduct(
-  //     {context,
-  //     required String name,
-  //     required String description,
-  //     required String price,
-  //     required String address,
-  //     required String start,
-  //     required String end,
-  //     required String image}) async {
-  //   loadingDialog(context: context);
-  //   Response addProductResponse = await post(Uri.parse("url"), body: {
-  //     "name": name,
-  //     "description": description,
-  //     "price": price,
-  //     "address": address,
-  //     "startBooking": start,
-  //     "endBooking": end,
-  //     "image": image
-  //   }, headers: {
-  //     "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
-  //   });
-  //   addProductResponseModel =
-  //       AddProductResponseModel.fromJson(json.decode(addProductResponse.body));
-  //   if (addProductResponse.statusCode == 200) {
-  //     Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const HomeView(),
-  //         ));
-  //     showSnackBar(
-  //         text: addProductResponseModel.message!,
-  //         context: context,
-  //         isError: false);
-  //   } else {
-  //     Navigator.pop(context);
-  //     showSnackBar(text: addProductResponseModel.message!, context: context);
-  //   }
-  // }
+  Future<void> addProduct(
+      {context,
+      required String name,
+      required String description,
+      required String price,
+      required String latitude,
+      required String longitude,
+      required String startDate,
+      required String endDate,
+      required List<File> imageFileList,
+      required String categoryId}) async {
+    try {
+      loadingDialog(context: context);
+      List<dynamic>? documents = [];
+      for (int i = 0; i < imageFileList.length; i++) {
+        var path = imageFileList[i].path;
+        documents.add(
+          await dio.MultipartFile.fromFile(path,
+              filename: path.split('/').last),
+        );
+      }
+      dio.FormData formData = dio.FormData.fromMap({
+        "name": name,
+        "description": description,
+        "price": price,
+        "latitude": latitude,
+        "longitude": longitude,
+        "startBooking": startDate,
+        "endBooking": endDate,
+        "images": documents,
+        "category_id": categoryId
+      });
+      Map<String, String> headers = {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
+      };
+      dio.Response response =
+          await dio.Dio(dio.BaseOptions(baseUrl: API.baseUrl)).post(
+              '/auth/profile-image/',
+              data: formData,
+              options: dio.Options(headers: headers, method: 'POST'));
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeView(),
+            ));
+        showSnackBar(
+            text: response.data['message']!, context: context, isError: false);
+      } else {
+        Navigator.pop(context);
+        showSnackBar(text: response.data['message']!, context: context);
+      }
+    } on dio.DioException catch (e) {
+      print(e);
+    }
+  }
 
   // Future<void> changeProfilePic({context, required String image}) async {
   //   loadingDialog(context: context);
@@ -530,43 +551,43 @@ class BloC {
 
   //------------------------------Products--------------------------------------
 
-  Future<void> addProduct(
-      {context,
-      required String name,
-      required String description,
-      required String price,
-      required String latitude,
-      required String longitude,
-      required String startDate,
-      required String endDate,
-      required String images,
-      required String categoryId}) async {
-    loadingDialog(context: context);
-    Response addProductResponse = await post(Uri.parse(API.products), body: {
-      "name": name,
-      "description": description,
-      "price": price,
-      "latitude": latitude,
-      "longitude": longitude,
-      "startBooking": startDate,
-      "endBooking": endDate,
-      "images": images,
-      "category_id": categoryId
-    }, headers: {
-      "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
-    });
-    addProductModel =
-        AddProductModel.fromJson(json.decode(addProductResponse.body));
-    if (addProductResponse.statusCode == 200) {
-      Navigator.pop(context);
-      Navigator.pop(context);
-      showSnackBar(
-          text: addProductModel!.message!, context: context, isError: false);
-    } else {
-      Navigator.pop(context);
-      showSnackBar(text: addProductModel!.message!, context: context);
-    }
-  }
+  // Future<void> addProduct(
+  //     {context,
+  //     required String name,
+  //     required String description,
+  //     required String price,
+  //     required String latitude,
+  //     required String longitude,
+  //     required String startDate,
+  //     required String endDate,
+  //     required String images,
+  //     required String categoryId}) async {
+  //   loadingDialog(context: context);
+  //   Response addProductResponse = await post(Uri.parse(API.products), body: {
+  //     "name": name,
+  //     "description": description,
+  //     "price": price,
+  //     "latitude": latitude,
+  //     "longitude": longitude,
+  //     "startBooking": startDate,
+  //     "endBooking": endDate,
+  //     "images": images,
+  //     "category_id": categoryId
+  //   }, headers: {
+  //     "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
+  //   });
+  //   addProductModel =
+  //       AddProductModel.fromJson(json.decode(addProductResponse.body));
+  //   if (addProductResponse.statusCode == 200) {
+  //     Navigator.pop(context);
+  //     Navigator.pop(context);
+  //     showSnackBar(
+  //         text: addProductModel!.message!, context: context, isError: false);
+  //   } else {
+  //     Navigator.pop(context);
+  //     showSnackBar(text: addProductModel!.message!, context: context);
+  //   }
+  // }
 
   Future<void> getAllProducts({
     context,

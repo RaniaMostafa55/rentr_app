@@ -118,39 +118,17 @@ loadingDialog({context}) {
       return Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.1),
-<<<<<<< HEAD
-        child: AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            content: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      color: mainColor,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    LocaleText("please_wait")
-                  ],
-                )
-              ],
-            )),
-=======
         child: WillPopScope(
           onWillPop: () async => false,
           child: AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              content: Column(
+              content: const Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircularProgressIndicator(
                         color: mainColor,
                       ),
@@ -163,7 +141,6 @@ loadingDialog({context}) {
                 ],
               )),
         ),
->>>>>>> ba9ef0b17da0a8cd844af9746c00ef9d2d564aca
       );
     },
   );
