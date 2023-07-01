@@ -69,19 +69,27 @@ class _ProfileViewState extends State<ProfileView> {
                       clipBehavior: Clip.none,
                       // alignment: Alignment.bottomRight,
                       children: [
-                        userImage(
-                          context: context,
-                          image: (isUserAccount)
-                              ? (bLoC.userModel.data!.image!.isEmpty)
-                                  ? const NetworkImage(
-                                      "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
-                                  : NetworkImage(bLoC.userModel.data!.image!)
-                              : (bLoC.anotherUserModel.data!.image!.isEmpty)
-                                  ? const NetworkImage(
-                                      "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
-                                  : NetworkImage(
-                                      bLoC.anotherUserModel.data!.image!),
-                        ),
+                        (isUserAccount)
+                            ? StreamBuilder(
+                                initialData: bLoC.userModel,
+                                stream: bLoC.user,
+                                builder: (context, snapshot) => userImage(
+                                    context: context,
+                                    image: (snapshot.data!.data!.image!.isEmpty)
+                                        ? const NetworkImage(
+                                            "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
+                                        : NetworkImage(
+                                            snapshot.data!.data!.image!)),
+                              )
+                            : userImage(
+                                context: context,
+                                image: (bLoC
+                                        .anotherUserModel.data!.image!.isEmpty)
+                                    ? const NetworkImage(
+                                        "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600")
+                                    : NetworkImage(
+                                        bLoC.anotherUserModel.data!.image!),
+                              ),
                         (isUserAccount)
                             ? Positioned(
                                 right: -10,

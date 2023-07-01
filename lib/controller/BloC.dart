@@ -355,6 +355,7 @@ class BloC {
           filename: "profile pic"));
     var response = await request.send();
     if (response.statusCode == 200) {
+      getUserData();
       print("Doneeeee");
     } else {
       print(response.statusCode);
