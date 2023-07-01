@@ -37,7 +37,6 @@ class _ItemDetailsState extends State<ItemDetails> {
                     child: GlobalAppBar(
                       title: "item_details",
                       hasActions: true,
-                      isDoubleBack: true,
                       iconAction: [
                         IconButton(
                             onPressed: () {

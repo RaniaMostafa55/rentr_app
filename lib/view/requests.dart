@@ -22,7 +22,7 @@ class _RequestsState extends State<Requests> {
     return Scaffold(
       appBar: const GlobalAppBar(
         title: "requests",
-        isDoubleBack: true,
+        // isDoubleBack: true,
       ),
       body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
