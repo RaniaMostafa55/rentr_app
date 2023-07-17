@@ -19,10 +19,11 @@ class GetUsersReviewModel {
 
 class UserReviewData {
   int? totalReviews;
-  UserReviewData({this.totalReviews});
+  int? numberOfRatings;
+  UserReviewData({this.totalReviews, this.numberOfRatings});
   factory UserReviewData.fromJson(Map<String, dynamic> json) {
     return UserReviewData(
-      totalReviews: json['totalReview'],
-    );
+        totalReviews: json['totalReview'],
+        numberOfRatings: json['numberOfRatings']);
   }
 }

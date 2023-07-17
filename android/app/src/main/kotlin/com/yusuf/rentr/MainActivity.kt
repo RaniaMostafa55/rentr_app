@@ -1,4 +1,4 @@
-package com.example.renta_app
+package com.yusuf.rentr
 
 import io.flutter.embedding.android.FlutterActivity
 

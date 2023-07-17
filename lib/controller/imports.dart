@@ -71,3 +71,4 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:renta_app/view/faq.dart';
 export 'package:renta_app/view/search.dart';
 export 'dart:async';
+export 'package:camera/camera.dart';

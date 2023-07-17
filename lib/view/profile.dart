@@ -1,4 +1,5 @@
 import 'package:renta_app/controller/imports.dart';
+import 'package:renta_app/view/take_pic_from_camera.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -99,10 +100,22 @@ class _ProfileViewState extends State<ProfileView> {
                                     showModalBottomSheet(
                                       context: context,
                                       builder: (builder) => bottomSheet(
-                                        context: context,
-                                        onGalleryPressed: bLoC.getFromGallery,
-                                        onCameraPressed: bLoC.getFromCamera,
-                                      ),
+                                          context: context,
+                                          onGalleryPressed: bLoC.getFromGallery,
+                                          onCameraPressed: () async {
+                                            final cameras =
+                                                await availableCameras();
+                                            final firstCamera = cameras.first;
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TakePictureScreen(
+                                                          camera: firstCamera),
+                                                ));
+                                          }
+                                          // bLoC.getFromCamera,
+                                          ),
                                     );
                                   },
                                   child: Container(

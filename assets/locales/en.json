@@ -107,5 +107,6 @@
   "user_account":"User Account",
   "press_here":"Press here",
   "select_category":"Select a category",
-  "no_products_exist_in_this_category":"No products exist in this category"
+  "no_products_exist_in_this_category":"No products exist in this category",
+  "requested":"requested"
 }
