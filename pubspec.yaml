@@ -51,12 +51,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio:
   camera: ^0.10.5+2
-<<<<<<< HEAD
-=======
   path_provider: ^2.0.15
   path: ^1.8.2
-
->>>>>>> 8b48d2491c6e734490567705d9fc34ffaee2eaca
 
 dev_dependencies:
   flutter_test:

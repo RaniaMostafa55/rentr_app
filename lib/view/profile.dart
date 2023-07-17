@@ -103,16 +103,18 @@ class _ProfileViewState extends State<ProfileView> {
                                           context: context,
                                           onGalleryPressed: bLoC.getFromGallery,
                                           onCameraPressed: () async {
-                                            final cameras =
-                                                await availableCameras();
-                                            final firstCamera = cameras.first;
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TakePictureScreen(
-                                                          camera: firstCamera),
-                                                ));
+                                            await availableCameras().then(
+                                                (value) =>
+                                                    Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TakePictureScreen(
+                                                                camera: value
+                                                                    .first),
+                                                      ),
+                                                    ));
+                                            // final firstCamera = cameras.first;
                                           }
                                           // bLoC.getFromCamera,
                                           ),
@@ -350,12 +352,12 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                               child: shadowContainer(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(18.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children: [
                                         LocaleText(
                                           "change_user_data",
                                           style: TextStyle(
@@ -390,12 +392,12 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                               child: shadowContainer(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(18.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children: [
                                         LocaleText(
                                           "change_password",
                                           style: TextStyle(
@@ -534,12 +536,12 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                               child: shadowContainer(
                                   borderRadius: BorderRadius.circular(10),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(18.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children: [
                                         LocaleText(
                                           "change_language",
                                           style: TextStyle(

@@ -269,11 +269,12 @@ class BloC {
   getFromCamera() async {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
-    imageFile = File(pickedFile!.path);
-    await addImage(filepath: pickedFile.path);
+    // imageFile = File(pickedFile!.path);
+    await addImage(filepath: pickedFile!.path);
   }
 
   Future<void> addImage({required String filepath}) async {
+    imageFile = File(filepath);
     String addimageUrl = API.changeProfileImg;
     Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',

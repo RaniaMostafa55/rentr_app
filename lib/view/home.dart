@@ -60,9 +60,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   getData(BuildContext context) async {
     await bLoC.getUserData();
-    await bLoC.getCategories(context: context);
+    await bLoC.getCategories();
     await bLoC.storeCategories();
-    await bLoC.getProductsByCategory(context: context, categoryId: "1");
+    await bLoC.getProductsByCategory(categoryId: "1");
   }
 
   @override

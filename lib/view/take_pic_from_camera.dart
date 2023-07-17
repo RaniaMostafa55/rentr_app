@@ -44,10 +44,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget build(BuildContext context) {
     // Fill this out in the next steps.
     return Scaffold(
-      body: // You must wait until the controller is initialized before displaying the
-// camera preview. Use a FutureBuilder to display a loading spinner until the
-// controller has finished initializing.
-          FutureBuilder<void>(
+      body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -62,8 +59,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.
         onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
           try {
             // Ensure that the camera is initialized.
             await _initializeControllerFuture;
@@ -72,11 +67,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and then get the location
             // where the image file is saved.
             final image = await _controller.takePicture();
-            await bLoC.addImage(filepath: image.path);
-            Navigator.pop(context);
+
+            if (!mounted) return;
+
+            print('yessssssssssssssssssssssss');
+
+            await bLoC
+                .addImage(filepath: image.path)
+                .then((value) => Navigator.of(context).pop());
+            // Navigator.pop(context);
           } catch (e) {
             // If an error occurs, log the error to the console.
-            print(e);
+            print('errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrror  $e');
           }
         },
         child: const Icon(Icons.camera_alt),
