@@ -265,7 +265,7 @@ class BloC {
     await addImage(filepath: imageFile!.path);
   }
 
-  void getFromCamera() async {
+  getFromCamera() async {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
     imageFile = File(pickedFile!.path);
