@@ -87,15 +87,16 @@ class BloC {
     if (loginResponse.statusCode == 200) {
       CacheHelper.putString(key: "token", value: loginModel.data!.token!);
       CacheHelper.putString(key: "emaill", value: email);
-      CacheHelper.putString(key: "pass", value: password);
+      CacheHelper.putString(
+          key: "name", value: loginModel.data!.userData!.name!);
       CacheHelper.putBool(key: "isLoggedIn", value: true);
       CacheHelper.putInt(key: "id", value: loginModel.data!.userData!.id!);
       await getUserData();
       // getRequests(context: context);
       // getUserReview(context: context);
-      await getCategories(context: context);
+      await getCategories();
       await storeCategories();
-      await getProductsByCategory(context: context, categoryId: "1");
+      await getProductsByCategory(categoryId: "1");
       Navigator.pop(context);
       Navigator.pushReplacement(
           context,
@@ -570,7 +571,7 @@ class BloC {
     }
   }
 
-  Future<void> getCategories({context}) async {
+  Future<void> getCategories() async {
     Response getCategoriesResponse =
         await get(Uri.parse(API.getCategories), headers: {
       "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
@@ -580,14 +581,13 @@ class BloC {
     if (getCategoriesResponse.statusCode == 200) {
       print("Done");
     } else {
-      Navigator.pop(context);
-      showSnackBar(text: getCategoriesModel!.message!, context: context);
+      // Navigator.pop(context);
+      // showSnackBar(text: getCategoriesModel!.message!, context: context);
     }
   }
 
-  Future<void> getProductsByCategory(
-      {context, required String categoryId}) async {
-    loadingDialog(context: context);
+  Future<void> getProductsByCategory({required String categoryId}) async {
+    // loadingDialog(context: context);
     Response getProductByCategoryResponse = await get(
         Uri.parse('${API.getProductsByCategory}$categoryId'),
         headers: {
@@ -596,18 +596,20 @@ class BloC {
     getProductsByCategoryModel = GetSomeProductsModel.fromJson(
         json.decode(getProductByCategoryResponse.body));
     if (getProductByCategoryResponse.statusCode == 200) {
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } else {
-      Navigator.pop(context);
-      showSnackBar(
-          text: getProductsByCategoryModel!.message!, context: context);
+      // Navigator.pop(context);
+      // showSnackBar(
+      //     text: getProductsByCategoryModel!.message!, context: context);
     }
   }
 
   Future<void> storeCategories() async {
     for (int i = 0; i < getCategoriesModel!.productsData!.length; i++) {
-      arabicCategories.add(getCategoriesModel!.productsData![i].nameArabic);
-      englishCategories.add(getCategoriesModel!.productsData![i].nameEnglish);
+      arabicCategories.add(getCategoriesModel!.productsData![i].nameArabic!);
+      englishCategories.add(getCategoriesModel!.productsData![i].nameEnglish!);
     }
+    CacheHelper.putList(key: "arabic_categories", value: arabicCategories);
+    CacheHelper.putList(key: "english_categories", value: englishCategories);
   }
 }

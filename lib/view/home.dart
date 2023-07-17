@@ -101,6 +101,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                 leading: Icons.person_outlined,
                 onTap: () async {
                   await bLoC.getUserReview(context: context);
+
                   Navigator.pop(context);
                   isUserAccount = true;
                   Navigator.push(
@@ -241,7 +242,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                   (index) => InkWell(
                                     onTap: () async {
                                       await bLoC.getProductsByCategory(
-                                          context: context,
+                                          // context: context,
                                           categoryId: (index + 1).toString());
                                       setState(() {
                                         // tapIndex = index;

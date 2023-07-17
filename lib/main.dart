@@ -2,8 +2,15 @@ import 'controller/imports.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // final cameras = await availableCameras();
+  // final firstCamera = cameras.first;
   await CacheHelper.init();
   await Locales.init(['en', 'ar']);
+  if (CacheHelper.getBool(key: "isLoggedIn", choice: false) == true) {
+    await bLoC.getUserData();
+    await bLoC.getCategories();
+    await bLoC.getProductsByCategory(categoryId: "1");
+  }
   HttpOverrides.global = MyHttpOverrides();
   runApp(ChangeNotifierProvider<MyProvider>(
       create: (context) => MyProvider(), child: const MyApp()));
