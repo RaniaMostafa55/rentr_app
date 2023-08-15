@@ -2,6 +2,8 @@ import 'package:dio/dio.dart' as dio;
 import 'package:http/http.dart' as http;
 import 'package:renta_app/controller/imports.dart';
 
+import '../model/get_products_by_category.dart';
+
 class BloC {
   final _userSubject = BehaviorSubject<UserModel>();
   Stream<UserModel> get user => _userSubject.stream;
@@ -34,10 +36,10 @@ class BloC {
   late AddReviewModel addUserReviewModel;
   late AddProductModel? addProductModel;
   late GetAllProductsModel? getAllProductsModel;
-  late GetSomeProductsModel? searchProductModel;
+  late GetAllProductsModel? searchProductModel;
   late GetProductModel? getProductModel;
   late GetCategoriesModel? getCategoriesModel;
-  late GetSomeProductsModel? getProductsByCategoryModel;
+  late GetProductsByCategoryModel? getProductsByCategoryModel;
   File? imageFile;
 
   Future<void> signUp({
@@ -81,8 +83,11 @@ class BloC {
     required String password,
   }) async {
     loadingDialog(context: context);
-    Response loginResponse = await post(Uri.parse(API.login),
-        body: {"email": email, "password": password});
+    Response loginResponse = await post(Uri.parse(API.login), body: {
+      "email": email,
+      "password": password,
+      "device_token": deviceToken
+    });
     loginModel = LoginModel.fromJson(json.decode(loginResponse.body));
     if (loginResponse.statusCode == 200) {
       CacheHelper.putString(key: "token", value: loginModel.data!.token!);
@@ -95,7 +100,7 @@ class BloC {
       // getRequests(context: context);
       // getUserReview(context: context);
       await getCategories();
-      await storeCategories();
+
       await getProductsByCategory(categoryId: "1");
       Navigator.pop(context);
       Navigator.pushReplacement(
@@ -269,11 +274,12 @@ class BloC {
   void getFromCamera() async {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
-    imageFile = File(pickedFile!.path);
-    await addImage(filepath: pickedFile.path);
+    // imageFile = File(pickedFile!.path);
+    await addImage(filepath: pickedFile!.path);
   }
 
   Future<void> addImage({required String filepath}) async {
+    imageFile = File(filepath);
     String addimageUrl = API.changeProfileImg;
     Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
@@ -319,6 +325,7 @@ class BloC {
           text: addRequestModel.message!, context: context, isError: false);
     } else {
       Navigator.pop(context);
+      print(addRequestResponse.body);
       showSnackBar(text: addRequestModel.message!, context: context);
     }
   }
@@ -490,8 +497,6 @@ class BloC {
       required String price,
       required String latitude,
       required String longitude,
-      required String startDate,
-      required String endDate,
       required List<File> imageFileList,
       required String categoryId}) async {
     try {
@@ -510,8 +515,8 @@ class BloC {
         "price": price,
         "latitude": latitude,
         "longitude": longitude,
-        "startBooking": startDate,
-        "endBooking": endDate,
+        "startBooking": '2023/4/01',
+        "endBooking": '2023/4/05',
         "images": documents,
         "category_id": categoryId
       });
@@ -540,17 +545,17 @@ class BloC {
   }
 
   Future<void> searchProducts({context, required String searchText}) async {
-    loadingDialog(context: context);
+    // loadingDialog(context: context);
     Response searchProductsResponse =
         await get(Uri.parse('${API.searchProduct}$searchText'), headers: {
       "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
     });
     searchProductModel =
-        GetSomeProductsModel.fromJson(json.decode(searchProductsResponse.body));
+        GetAllProductsModel.fromJson(json.decode(searchProductsResponse.body));
     if (searchProductsResponse.statusCode == 200) {
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } else {
-      Navigator.pop(context);
+      // Navigator.pop(context);
       showSnackBar(text: searchProductModel!.message!, context: context);
     }
   }
@@ -579,6 +584,7 @@ class BloC {
     getCategoriesModel =
         GetCategoriesModel.fromJson(json.decode(getCategoriesResponse.body));
     if (getCategoriesResponse.statusCode == 200) {
+      await storeCategories();
       print("Done");
     } else {
       // Navigator.pop(context);
@@ -593,7 +599,7 @@ class BloC {
         headers: {
           "Authorization": "Bearer ${CacheHelper.getString(key: "token")}",
         });
-    getProductsByCategoryModel = GetSomeProductsModel.fromJson(
+    getProductsByCategoryModel = GetProductsByCategoryModel.fromJson(
         json.decode(getProductByCategoryResponse.body));
     if (getProductByCategoryResponse.statusCode == 200) {
       // Navigator.pop(context);
@@ -609,7 +615,7 @@ class BloC {
       arabicCategories.add(getCategoriesModel!.productsData![i].nameArabic!);
       englishCategories.add(getCategoriesModel!.productsData![i].nameEnglish!);
     }
-    CacheHelper.putList(key: "arabic_categories", value: arabicCategories);
-    CacheHelper.putList(key: "english_categories", value: englishCategories);
+    // CacheHelper.putList(key: "arabic_categories", value: arabicCategories);
+    // CacheHelper.putList(key: "english_categories", value: englishCategories);
   }
 }

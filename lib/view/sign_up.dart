@@ -1,4 +1,5 @@
 import 'package:renta_app/controller/imports.dart';
+import 'package:renta_app/view/terms_conditions.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -19,7 +20,7 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController userAddressController = TextEditingController();
   TextEditingController latitudeAddressController = TextEditingController();
   TextEditingController longitudeAddressController = TextEditingController();
-
+  bool agreeToTerms = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -180,6 +181,44 @@ class _SignUpViewState extends State<SignUpView> {
                         ));
                   },
                 ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      checkColor: secColor,
+                      activeColor: textFieldColor.withOpacity(0.8),
+                      value: agreeToTerms,
+                      onChanged: (value) {
+                        setState(() {
+                          agreeToTerms = !agreeToTerms;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const LocaleText(
+                      "agree_to",
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    textButtonn(
+                        text: "terms_and_condidtions",
+                        color: secColor,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const TermsAndConditions(),
+                            ),
+                          );
+                        })
+                  ],
+                ),
                 // SizedBox(
                 //   height: MediaQuery.of(context).size.height * 0.01,
                 // ),
@@ -199,22 +238,28 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 matButton(
                     onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-                        CacheHelper.putString(
-                            key: "email", value: emailAddressController.text);
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => HomeView(),
-                        //     ));
-                        bLoC.signUp(
-                            name: usernameController.text,
-                            email: emailAddressController.text,
-                            password: passwordController.text,
-                            phone: phoneController.text,
-                            latitude: latitudeAddressController.text,
-                            longitude: longitudeAddressController.text,
+                      if (agreeToTerms) {
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
+                          CacheHelper.putString(
+                              key: "email", value: emailAddressController.text);
+                          // Navigator.pushReplacement(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => HomeView(),
+                          //     ));
+                          bLoC.signUp(
+                              name: usernameController.text,
+                              email: emailAddressController.text,
+                              password: passwordController.text,
+                              phone: phoneController.text,
+                              latitude: latitudeAddressController.text,
+                              longitude: longitudeAddressController.text,
+                              context: context);
+                        }
+                      } else {
+                        showSnackBar(
+                            text: "You have to agree to terms & conditions",
                             context: context);
                       }
                     },

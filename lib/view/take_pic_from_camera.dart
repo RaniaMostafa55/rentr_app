@@ -47,40 +47,60 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       body: // You must wait until the controller is initialized before displaying the
 // camera preview. Use a FutureBuilder to display a loading spinner until the
 // controller has finished initializing.
-          FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
-          } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
-          try {
-            // Ensure that the camera is initialized.
-            await _initializeControllerFuture;
-            print("Doneeeeeeeeeeeeeee");
+          Column(
+        children: [
+          Expanded(
+            flex: 4,
+            child: FutureBuilder<void>(
+              future: _initializeControllerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // If the Future is complete, display the preview.
+                  return CameraPreview(_controller);
+                } else {
+                  // Otherwise, display a loading indicator.
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: FloatingActionButton(
+              backgroundColor: secColor,
+              // Provide an onPressed callback.
+              onPressed: () async {
+                // Take the Picture in a try / catch block. If anything goes wrong,
+                // catch the error.
+                try {
+                  // Ensure that the camera is initialized.
+                  await _initializeControllerFuture;
+                  print("Doneeeeeeeeeeeeeee");
 
-            // Attempt to take a picture and then get the location
-            // where the image file is saved.
-            final image = await _controller.takePicture();
-            await bLoC.addImage(filepath: image.path);
-            Navigator.pop(context);
-          } catch (e) {
-            // If an error occurs, log the error to the console.
-            print(e);
-          }
-        },
-        child: const Icon(Icons.camera_alt),
+                  // Attempt to take a picture and then get the location
+                  // where the image file is saved.
+                  final image = await _controller.takePicture();
+                  // await bLoC.addImage(filepath: image.path);
+                  // Navigator.pop(context);
+                  if (!mounted) return;
+
+                  print('yessssssssssssssssssssssss');
+
+                  await bLoC
+                      .addImage(filepath: image.path)
+                      .then((value) => Navigator.of(context).pop());
+                } catch (e) {
+                  // If an error occurs, log the error to the console.
+                  // print(e);
+                  print('errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrror  $e');
+                }
+              },
+              child: const Icon(Icons.camera_alt),
+            ),
+          ),
+        ],
       ),
+      // floatingActionButton:
     );
   }
 }

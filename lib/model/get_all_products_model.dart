@@ -15,7 +15,7 @@ class GetAllProductsModel {
 
 class ProductsData {
   ItemData? itemData;
-  double? distance;
+  num? distance;
   ProductsData({this.itemData, this.distance});
   factory ProductsData.fromJson(Map<String, dynamic> json) {
     return ProductsData(

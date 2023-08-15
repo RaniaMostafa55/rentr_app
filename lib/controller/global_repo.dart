@@ -10,3 +10,4 @@ bool notSignedUpYet = false;
 List<String> englishCategories = [];
 List<String> arabicCategories = [];
 bool isSignUpPage = false;
+String? deviceToken;

@@ -3,6 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  firebase_core
+  platform_device_id_windows
   smart_auth
   url_launcher_windows
 )

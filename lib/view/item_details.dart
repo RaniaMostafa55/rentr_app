@@ -183,9 +183,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                       textButtonn(
                           text: "comm_with_owner",
                           onPressed: () {
-                            Utils.whatsAppOpen(phoneNumber: "+201117199897"
-                                // bLoC.anotherUserModel.data!.phone!
-                                );
+                            Utils.whatsAppOpen(
+                                phoneNumber:
+                                    // "+201117199897"
+                                    bLoC.anotherUserModel.data!.phone!);
                           },
                           color: secColor,
                           isNotUnderlined: true)
@@ -235,12 +236,12 @@ class _ItemDetailsState extends State<ItemDetails> {
                                   builder: (context) => const ProfileView(),
                                 ));
                           }),
-                          data(
-                            context,
-                            title: "available_period",
-                            info:
-                                "${bLoC.getProductModel!.data!.startDate!} : ${bLoC.getProductModel!.data!.endDate!}",
-                          ),
+                          // data(
+                          //   context,
+                          //   title: "available_period",
+                          //   info:
+                          //       "${bLoC.getProductModel!.data!.startDate!} : ${bLoC.getProductModel!.data!.endDate!}",
+                          // ),
                         ],
                       ),
                     ),

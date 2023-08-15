@@ -1,9 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'controller/imports.dart';
+
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  // showFlutterToast(
+  //     message: "On background message", state: ToastStates.success);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // final cameras = await availableCameras();
-  // final firstCamera = cameras.first;
+  await Firebase.initializeApp();
+  FirebaseMessaging.instance.getToken().then((value) {
+    deviceToken = value;
+    print("Tokennnnnnn issssssssssss $deviceToken");
+  });
+  FirebaseMessaging.onMessage.listen((event) {
+    print(event.data.toString());
+    // showFlutterToast(message: "On message", state: ToastStates.success);
+  });
+
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    print(event.data.toString());
+    // showFlutterToast(
+    //     message: "On message opened app", state: ToastStates.success);
+  });
+  FirebaseMessaging.onBackgroundMessage((firebaseMessagingBackgroundHandler));
   await CacheHelper.init();
   await Locales.init(['en', 'ar']);
   if (CacheHelper.getBool(key: "isLoggedIn", choice: false) == true) {

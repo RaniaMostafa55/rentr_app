@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "405057318320",
+    "project_id": "rentr-ce9cf",
+    "storage_bucket": "rentr-ce9cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405057318320:android:8a9158d23a7e0415b9fa75",
+        "android_client_info": {
+          "package_name": "com.yusuf.rentr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405057318320-v1qi89li9pkph55f0inl6l7p9pumltm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAULFWkp5Mt12QJ1_5LoyC6NncJOg46KXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405057318320-v1qi89li9pkph55f0inl6l7p9pumltm4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

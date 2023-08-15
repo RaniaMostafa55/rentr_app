@@ -151,71 +151,71 @@ class _AddItemState extends State<AddItem> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
-                    globalTextField(
-                        controller: startDate,
-                        readOnly: true,
-                        label: "booking_start_date",
-                        prefix: Icons.calendar_month_outlined,
-                        onTap: () async {
-                          DateTime? start = await showDatePicker(
-                              builder: (context, child) => Theme(
-                                  data: ThemeData(
-                                    colorScheme: const ColorScheme.light(
-                                      primary: mainColor,
-                                    ),
-                                  ),
-                                  child: child ?? const Text("")),
-                              context: context,
-                              initialDate: date,
-                              firstDate: DateTime(2020),
-                              lastDate: DateTime(2030));
-                          if (start != null) {
-                            startDate.text = DateFormat.yMMMEd().format(start);
-                          }
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter booking start date";
-                          } else {
-                            return null;
-                          }
-                        },
-                        textInputAction: TextInputAction.next),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    globalTextField(
-                        controller: endDate,
-                        readOnly: true,
-                        label: "booking_end_date",
-                        prefix: Icons.calendar_month_outlined,
-                        onTap: () async {
-                          DateTime? end = await showDatePicker(
-                              builder: (context, child) => Theme(
-                                  data: ThemeData(
-                                      colorScheme: const ColorScheme.light(
-                                    primary: mainColor,
-                                  )),
-                                  child: child ?? const Text("")),
-                              context: context,
-                              initialDate: date,
-                              firstDate: DateTime(2020),
-                              lastDate: DateTime(2030));
-                          if (end != null) {
-                            endDate.text = DateFormat.yMMMEd().format(end);
-                          }
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter booking end date";
-                          } else {
-                            return null;
-                          }
-                        },
-                        textInputAction: TextInputAction.next),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
+                    // globalTextField(
+                    //     controller: startDate,
+                    //     readOnly: true,
+                    //     label: "booking_start_date",
+                    //     prefix: Icons.calendar_month_outlined,
+                    //     onTap: () async {
+                    //       DateTime? start = await showDatePicker(
+                    //           builder: (context, child) => Theme(
+                    //               data: ThemeData(
+                    //                 colorScheme: const ColorScheme.light(
+                    //                   primary: mainColor,
+                    //                 ),
+                    //               ),
+                    //               child: child ?? const Text("")),
+                    //           context: context,
+                    //           initialDate: date,
+                    //           firstDate: DateTime(2020),
+                    //           lastDate: DateTime(2030));
+                    //       if (start != null) {
+                    //         startDate.text = DateFormat.yMMMEd().format(start);
+                    //       }
+                    //     },
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) {
+                    //         return "Please enter booking start date";
+                    //       } else {
+                    //         return null;
+                    //       }
+                    //     },
+                    //     textInputAction: TextInputAction.next),
+                    // SizedBox(
+                    //   height: MediaQuery.of(context).size.height * 0.01,
+                    // ),
+                    // globalTextField(
+                    //     controller: endDate,
+                    //     readOnly: true,
+                    //     label: "booking_end_date",
+                    //     prefix: Icons.calendar_month_outlined,
+                    //     onTap: () async {
+                    //       DateTime? end = await showDatePicker(
+                    //           builder: (context, child) => Theme(
+                    //               data: ThemeData(
+                    //                   colorScheme: const ColorScheme.light(
+                    //                 primary: mainColor,
+                    //               )),
+                    //               child: child ?? const Text("")),
+                    //           context: context,
+                    //           initialDate: date,
+                    //           firstDate: DateTime(2020),
+                    //           lastDate: DateTime(2030));
+                    //       if (end != null) {
+                    //         endDate.text = DateFormat.yMMMEd().format(end);
+                    //       }
+                    //     },
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) {
+                    //         return "Please enter booking end date";
+                    //       } else {
+                    //         return null;
+                    //       }
+                    //     },
+                    //     textInputAction: TextInputAction.next),
+                    // SizedBox(
+                    //   height: MediaQuery.of(context).size.height * 0.01,
+                    // ),
                     globalTextField(
                         controller: imagesController,
                         readOnly: true,
@@ -291,8 +291,8 @@ class _AddItemState extends State<AddItem> {
                               price: priceController.text,
                               latitude: itemLatitudeAddressController.text,
                               longitude: itemLongitudeAddressController.text,
-                              startDate: startDate.text,
-                              endDate: endDate.text,
+                              // startDate: startDate.text,
+                              // endDate: endDate.text,
                               context: context,
                               imageFileList: imageFile!,
                             );

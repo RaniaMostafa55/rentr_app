@@ -61,7 +61,6 @@ export 'package:renta_app/model/add_request_model.dart';
 export 'package:renta_app/model/get_categories_model.dart';
 export 'package:renta_app/model/get_product_reviews_model.dart';
 export 'package:renta_app/model/get_requests_model.dart';
-export 'package:renta_app/model/get_some_products.dart';
 export 'package:renta_app/model/get_users_review_model.dart';
 export 'package:renta_app/model/product_model.dart';
 export 'package:rxdart/rxdart.dart' hide Rx hide Notification;

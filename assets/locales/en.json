@@ -108,5 +108,7 @@
   "press_here":"Press here",
   "select_category":"Select a category",
   "no_products_exist_in_this_category":"No products exist in this category",
-  "requested":"requested"
+  "requested":"requested",
+  "terms_and_condidtions":"Terms & Condidtions",
+  "agree_to":"Agree to "
 }

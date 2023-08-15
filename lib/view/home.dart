@@ -1,4 +1,5 @@
 import 'package:renta_app/controller/imports.dart';
+import 'package:renta_app/view/terms_conditions.dart';
 
 List<String> itemsPics = [
   "assets/images/cam1.png",
@@ -122,6 +123,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       ));
                 }),
             drawerTile(
+                title: "terms_and_condidtions",
+                leading: Icons.security_outlined,
+                onTap: () async {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TermsAndConditions(),
+                      ));
+                }),
+            drawerTile(
                 title: "about_app",
                 leading: Icons.info_outline,
                 onTap: () {
@@ -136,6 +148,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                 title: "logout",
                 leading: Icons.logout,
                 onTap: () {
+                  CacheHelper.putBool(key: "isLoggedIn", value: false);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

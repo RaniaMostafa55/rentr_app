@@ -11,12 +11,12 @@ TextFormField globalTextField(
     bool? obsecure,
     TextEditingController? controller,
     TextInputType? keyboardType,
-    void Function(String)? onFieldSubmitted,
+    void Function(String)? onChanged,
     required TextInputAction textInputAction,
     bool? readOnly,
     void Function()? onTap}) {
   return TextFormField(
-    onFieldSubmitted: onFieldSubmitted,
+    onChanged: onChanged,
     keyboardType: keyboardType,
     textInputAction: textInputAction,
     readOnly: readOnly ?? false,

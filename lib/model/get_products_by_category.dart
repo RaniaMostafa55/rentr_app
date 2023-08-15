@@ -1,12 +1,13 @@
 import 'package:renta_app/controller/imports.dart';
 
-class GetSomeProductsModel {
+class GetProductsByCategoryModel {
   int? statusCode;
   String? message;
   List<ItemData>? productsData;
-  GetSomeProductsModel({this.statusCode, this.message, this.productsData});
-  factory GetSomeProductsModel.fromJson(Map<String, dynamic> json) {
-    return GetSomeProductsModel(
+  GetProductsByCategoryModel(
+      {this.statusCode, this.message, this.productsData});
+  factory GetProductsByCategoryModel.fromJson(Map<String, dynamic> json) {
+    return GetProductsByCategoryModel(
         statusCode: json['status_code'],
         message: json['message'],
         productsData: (json['data'] as List<dynamic>?)

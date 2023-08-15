@@ -38,8 +38,11 @@ class _RequestsState extends State<Requests> {
                   child: requestCard(
                       context: context,
                       id: snapshot.data!.requestsData![index].id!,
-                      renterImage: snapshot
-                          .data!.requestsData![index].renterData!.image!,
+                      renterImage: (snapshot.data!.requestsData![index]
+                              .renterData!.image!.isEmpty)
+                          ? "https://images.pexels.com/photos/6214478/pexels-photo-6214478.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                          : snapshot
+                              .data!.requestsData![index].renterData!.image!,
                       renterName:
                           snapshot.data!.requestsData![index].renterData!.name!,
                       productName: snapshot

@@ -103,16 +103,17 @@ class _ProfileViewState extends State<ProfileView> {
                                           context: context,
                                           onGalleryPressed: bLoC.getFromGallery,
                                           onCameraPressed: () async {
-                                            final cameras =
-                                                await availableCameras();
-                                            final firstCamera = cameras.first;
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TakePictureScreen(
-                                                          camera: firstCamera),
-                                                ));
+                                            await availableCameras().then(
+                                                (value) =>
+                                                    Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TakePictureScreen(
+                                                                camera: value
+                                                                    .first),
+                                                      ),
+                                                    ));
                                           }
                                           // bLoC.getFromCamera,
                                           ),
@@ -182,7 +183,12 @@ class _ProfileViewState extends State<ProfileView> {
                               stream: bLoC.userReview,
                               builder: (context, snapshot) {
                                 return Text(
-                                  snapshot.data!.data!.totalReviews!.toString(),
+                                  snapshot.data!.data!.numberOfRatings == 0
+                                      ? '0'
+                                      : (snapshot.data!.data!.totalReviews! /
+                                              snapshot
+                                                  .data!.data!.numberOfRatings!)
+                                          .toString(),
                                   style: TextStyle(
                                       color: yellowColor,
                                       fontWeight: FontWeight.bold,
@@ -194,7 +200,12 @@ class _ProfileViewState extends State<ProfileView> {
                               stream: bLoC.anotherUserReview,
                               builder: (context, snapshot) {
                                 return Text(
-                                  snapshot.data!.data!.totalReviews!.toString(),
+                                  snapshot.data!.data!.numberOfRatings == 0
+                                      ? '0'
+                                      : (snapshot.data!.data!.totalReviews! /
+                                              snapshot
+                                                  .data!.data!.numberOfRatings!)
+                                          .toString(),
                                   style: TextStyle(
                                       color: yellowColor,
                                       fontWeight: FontWeight.bold,

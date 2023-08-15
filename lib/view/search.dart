@@ -30,7 +30,7 @@ class _SearchViewState extends State<SearchView> {
                     keyboardType: TextInputType.name,
                     label: "search",
                     suffix: Icons.search,
-                    onFieldSubmitted: (String value) async {
+                    onChanged: (String value) async {
                       await bLoC.searchProducts(
                           context: context, searchText: value);
                       if (searchController.text.isEmpty) {
@@ -61,22 +61,23 @@ class _SearchViewState extends State<SearchView> {
                               onTap: () async {
                                 await bLoC.getProductReview(
                                     productId: bLoC.searchProductModel!
-                                        .productsData![index].id!,
+                                        .productsData![index].itemData!.id!,
                                     context: context);
                                 await bLoC.getProduct(
                                     productId: bLoC.searchProductModel!
-                                        .productsData![index].id!
+                                        .productsData![index].itemData!.id!
                                         .toString(),
                                     context: context);
                                 await bLoC.getUserDataa(
                                     userId: bLoC.searchProductModel!
-                                        .productsData![index].userId);
+                                        .productsData![index].itemData!.userId);
+                                Navigator.pop(context);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => ItemDetails(
                                         productId: bLoC.searchProductModel!
-                                            .productsData![index].id!,
+                                            .productsData![index].itemData!.id!,
                                       ),
                                     ));
                               },
@@ -87,7 +88,7 @@ class _SearchViewState extends State<SearchView> {
                                   child: ListTile(
                                     title: Text(
                                       bLoC.searchProductModel!
-                                          .productsData![index].name!,
+                                          .productsData![index].itemData!.name!,
                                       style: const TextStyle(
                                           color: greyColor,
                                           fontSize: 18,
@@ -101,7 +102,7 @@ class _SearchViewState extends State<SearchView> {
                                     //       fontSize: 15),
                                     // ),
                                     trailing: Text(
-                                      'SAR ${bLoC.searchProductModel!.productsData![index].price!}',
+                                      'SAR ${bLoC.searchProductModel!.productsData![index].itemData!.price!}',
                                       style: const TextStyle(
                                           color: secColor,
                                           fontWeight: FontWeight.w600,
@@ -121,6 +122,7 @@ class _SearchViewState extends State<SearchView> {
                                           image: (bLoC
                                                       .searchProductModel!
                                                       .productsData![index]
+                                                      .itemData!
                                                       .image ==
                                                   "")
                                               ? const NetworkImage(
@@ -128,6 +130,7 @@ class _SearchViewState extends State<SearchView> {
                                               : NetworkImage(bLoC
                                                   .searchProductModel!
                                                   .productsData![index]
+                                                  .itemData!
                                                   .image!)),
                                     ),
                                   ),
