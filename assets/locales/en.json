@@ -78,7 +78,7 @@
   "price":"Price",
   "attach_item_pic":"Attach item pictures",
   "add":"Add item",
-  "about_app_text":"Rentr is an app created to help you find what you want to get for just a period of time. It shows you the device you want through searching. After that you can view the results arranged from the nearest to the farthest owner. You can also choose the best price for you. After finding the best option for you, you can send a request to the owner and wait for his approval. By then, you can go to his location and receive the device you have booked.",
+  "about_app_text":"Rentr application is an intermediary service that facilitates the exchange of benefits between the lessor and the lessor. The user can rent and lease the items and items in accordance with the controls and conditions mentioned below without any liability for application, since the application does not provide any guarantees and does not incur any liability if the lessor or lessee fails to comply with them.",
   "add_location":"Add Location",
   "most_chosen":"Most chosen",
   "tv":"TV",
@@ -110,5 +110,8 @@
   "no_products_exist_in_this_category":"No products exist in this category",
   "requested":"requested",
   "terms_and_condidtions":"Terms & Condidtions",
-  "agree_to":"Agree to "
+  "agree_to":"Agree to ",
+  "terms_first_text":"Using the application, you recognize full responsibility and comply with the rules and conditions of the application, which are as follows:",
+  "terms_third_text":"Failure to comply with these conditions gives application the right to cancel your account and take the necessary statutory measures.",
+  "contact_us":"Contact Us"
 }

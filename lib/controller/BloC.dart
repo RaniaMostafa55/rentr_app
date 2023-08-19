@@ -325,8 +325,9 @@ class BloC {
           text: addRequestModel.message!, context: context, isError: false);
     } else {
       Navigator.pop(context);
+      Navigator.pop(context);
       print(addRequestResponse.body);
-      showSnackBar(text: addRequestModel.message!, context: context);
+      // showSnackBar(text: addRequestModel.message!, context: context);
     }
   }
 

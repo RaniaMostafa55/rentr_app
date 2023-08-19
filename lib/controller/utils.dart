@@ -7,6 +7,16 @@ class Utils {
     }
   }
 
+  static Future openEmail({
+    String? toEmail,
+    String? subject,
+    String? body,
+  }) async {
+    final url =
+        'mailto:$toEmail?subject=${Uri.encodeFull(subject!)}&body=${Uri.encodeFull(body!)}';
+    await _launchUrl(url);
+  }
+
   static Future whatsAppOpen({required String phoneNumber}) async {
     await FlutterLaunch.launchWhatsapp(phone: phoneNumber, message: "");
   }

@@ -21,7 +21,7 @@ class AddLocation extends StatelessWidget {
           buttonColor: mainColor,
           locationPinIconColor: secColor,
           center: (notSignedUpYet)
-              ? LatLong(21.422510, 39.826168)
+              ? const LatLong(21.422510, 39.826168)
               : LatLong(bLoC.userModel.data!.latitude!,
                   bLoC.userModel.data!.longitude!),
           onPicked: (pickedData) {

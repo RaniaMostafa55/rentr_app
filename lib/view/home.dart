@@ -145,6 +145,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       ));
                 }),
             drawerTile(
+                title: "contact_us",
+                leading: Icons.contact_mail_outlined,
+                onTap: () {
+                  Utils.openEmail(
+                    toEmail: 'rentr.team@gmail.com',
+                    subject: "Help",
+                    body: "Help me with...",
+                  );
+                }),
+            drawerTile(
                 title: "logout",
                 leading: Icons.logout,
                 onTap: () {
